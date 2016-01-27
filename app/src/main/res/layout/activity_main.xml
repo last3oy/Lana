@@ -31,10 +31,9 @@
         android:layout_gravity="start">
 
 
-        <Button
-            android:text="Sample"
+        <ListView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            android:id="@+id/listView" />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
