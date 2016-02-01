@@ -90,4 +90,16 @@ public class bluetoothActivity extends AppCompatActivity {
         super.onDestroy();
         bt.stopService();
     }
+    public void onStart() {
+        super.onStart();
+        if(!bt.isBluetoothEnabled()) {
+            bt.enable();
+        } else {
+            if(!bt.isServiceAvailable()) {
+                bt.setupService();
+                bt.startService(BluetoothState.DEVICE_OTHER);
+
+            }
+        }
+    }
 }
