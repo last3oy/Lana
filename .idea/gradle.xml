@@ -5,17 +5,11 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-<<<<<<< HEAD
-        <option name="gradleJvm" value="1.8" />
-=======
->>>>>>> 1828992e2100eae7a61d225554f48b028236d80c
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bluetoothSPP" />
-<<<<<<< HEAD
-=======
           </set>
         </option>
         <option name="myModules">
@@ -23,7 +17,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bluetoothSPP" />
->>>>>>> 1828992e2100eae7a61d225554f48b028236d80c
           </set>
         </option>
       </GradleProjectSettings>
