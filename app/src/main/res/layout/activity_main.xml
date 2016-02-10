@@ -20,7 +20,10 @@
         <FrameLayout
             android:id="@+id/contentContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+
+        </FrameLayout>
     </LinearLayout>
 
     <!-- Menu -->
@@ -31,9 +34,11 @@
         android:layout_gravity="start">
 
 
-        <ListView
+        <Button
+            android:text="Sample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/listView" />
+            android:id="@+id/button" />
+
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

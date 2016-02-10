@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.akexorcist.bluetoothspp.test" >
+
+    <uses-sdk
+        android:minSdkVersion="1"
+        android:targetSdkVersion="1" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for app.akexorcist.bluetoothspp.test"
+        android:targetPackage="app.akexorcist.bluetoothspp.test" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application>
+        <uses-library android:name="android.test.runner" />
+
+        <activity android:name="app.akexorcist.bluetoothspp.DeviceList" />
+    </application>
+
+</manifest>
