@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "outputFile": "D:\\SeniorGit\\bluetoothSPP\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-sw600dp-v13\\values-sw600dp-v13.xml",
         "map": [
             {
@@ -43,6 +44,8 @@
         ]
     },
     {
+=======
+>>>>>>> 1828992e2100eae7a61d225554f48b028236d80c
         "outputFile": "E:\\Projectsenior\\bluetoothSPP\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-sw600dp-v13\\values-sw600dp-v13.xml",
         "map": [
             {

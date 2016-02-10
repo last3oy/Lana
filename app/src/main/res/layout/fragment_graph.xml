@@ -2,13 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".fragment.graphFragment">
+=======
+    tools:context="kmutt.senior.pet.fragment.graphFragmen">
+>>>>>>> 1828992e2100eae7a61d225554f48b028236d80c
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
+<<<<<<< HEAD
 
+=======
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:id="@+id/graph"
+        android:layout_below="@+id/section_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+>>>>>>> 1828992e2100eae7a61d225554f48b028236d80c
 
 </FrameLayout>

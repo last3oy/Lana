@@ -41,6 +41,7 @@
                 }
             }
         ]
+<<<<<<< HEAD
     },
     {
         "outputFile": "D:\\SeniorGit\\bluetoothSPP\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
@@ -84,5 +85,7 @@
                 }
             }
         ]
+=======
+>>>>>>> 1828992e2100eae7a61d225554f48b028236d80c
     }
 ]

@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="D:\SeniorGit\bluetoothSPP\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="D:\SeniorGit\bluetoothSPP\src\debug\jniLibs"/></dataSet></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="E:\Projectsenior\bluetoothSPP\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="E:\Projectsenior\bluetoothSPP\src\debug\jniLibs"/></dataSet></merger>
+>>>>>>> 1828992e2100eae7a61d225554f48b028236d80c
