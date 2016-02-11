@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
+    android:background="@drawable/nav_header_bg"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <!-- Imagen de perfil -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_action_location_found_dark" />
+
+    <!-- Nombre de Usuario -->
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Juana Maria Perez"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold" />
+
+    <!-- Correo de la cuenta -->
+    <TextView
+        android:id="@+id/email"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="juanaperez01@gmail.com"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+</LinearLayout>
