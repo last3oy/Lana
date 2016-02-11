@@ -4,7 +4,15 @@
         "source": "E:\\Projectsenior\\bluetoothSPP\\build\\intermediates\\bundles\\debug\\res\\layout\\device_list.xml"
     },
     {
+        "merged": "D:\\SeniorGit\\bluetoothSPP\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\device_list.xml",
+        "source": "D:\\SeniorGit\\bluetoothSPP\\build\\intermediates\\bundles\\debug\\res\\layout\\device_list.xml"
+    },
+    {
         "merged": "E:\\Projectsenior\\bluetoothSPP\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\device_name.xml",
         "source": "E:\\Projectsenior\\bluetoothSPP\\build\\intermediates\\bundles\\debug\\res\\layout\\device_name.xml"
+    },
+    {
+        "merged": "D:\\SeniorGit\\bluetoothSPP\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\device_name.xml",
+        "source": "D:\\SeniorGit\\bluetoothSPP\\build\\intermediates\\bundles\\debug\\res\\layout\\device_name.xml"
     }
 ]

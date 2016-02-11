@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kmutt.senior.pet">
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,13 +14,17 @@
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.bluetoothActivity"
             android:label="@string/title_activity_bluetooth"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.graphActivity"
+            android:label="@string/title_activity_graph"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
