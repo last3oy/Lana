@@ -36,6 +36,7 @@ public class graphActivity extends AppCompatActivity {
         });
         graph.addSeries(series);
 
+
         // titles
         graph.setTitle("Chart Title");
         graph.getGridLabelRenderer().setVerticalAxisTitle("Vertical Axis");

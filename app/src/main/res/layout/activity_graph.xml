@@ -29,12 +29,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginTop="55dp">
-    <com.jjoe64.graphview.GraphView
-        android:layout_width="match_parent"
-        android:layout_height="266dp"
-        android:id="@+id/graph"
-        android:layout_below="@+id/section_label"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+
 </LinearLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp" />
 </android.support.design.widget.CoordinatorLayout>
