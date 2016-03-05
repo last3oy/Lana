@@ -50,32 +50,36 @@ public class graphActivity extends ActionBarActivity {
         mChart.setScaleEnabled(true);
 
         // if disabled, scaling can be done on x- and y-axis separately
-        mChart.setPinchZoom(false);
+        mChart.setPinchZoom(true);
 
-        mChart.setDrawGridBackground(false);
+        mChart.setDrawGridBackground(true);
 
 
 
         XAxis x = mChart.getXAxis();
-        x.setEnabled(false);
+
+        x.setTextColor(Color.BLUE);
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        x.setDrawGridLines(false);
+        x.setAxisLineColor(Color.BLACK);
+        x.setDrawAxisLine(true);
 
         YAxis y = mChart.getAxisLeft();
 
-        y.setLabelCount(6, false);
-        y.setStartAtZero(false);
-        y.setTextColor(Color.BLACK);
-        y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        y.setTextColor(Color.BLUE);
+
         y.setDrawGridLines(false);
-        y.setAxisLineColor(Color.BLUE);
+        y.setAxisLineColor(Color.BLACK);
+
 
         mChart.getAxisRight().setEnabled(false);
 
         // add data
         setData(45, 100);
 
-        mChart.getLegend().setEnabled(false);
+        mChart.getLegend().setEnabled(true);
 
-        mChart.animateXY(2000, 2000);
+        mChart.animateX(2500);
 
         // dont forget to refresh the drawing
         mChart.invalidate();
@@ -103,17 +107,15 @@ public class graphActivity extends ActionBarActivity {
 
         // create a dataset and give it a type
         LineDataSet set1 = new LineDataSet(vals1, "DataSet 1");
-        set1.setDrawCubic(true);
-        //set1.setCubicIntensity(0.2f);
-        //set1.setDrawFilled(true);
-        set1.setDrawCircles(false);
-        set1.setLineWidth(1f);
-        set1.setCircleRadius(5f);
+        set1.setColor(Color.rgb(60, 220, 78));
+        set1.setLineWidth(2.5f);
         set1.setCircleColor(Color.rgb(240, 238, 70));
-        set1.setDrawValues(true);
-        set1.setHighLightColor(Color.rgb(244, 117, 117));
-        set1.setColor(Color.BLUE);
+        set1.setCircleRadius(5f);
         set1.setFillColor(Color.rgb(240, 238, 70));
+        set1.setDrawCubic(true);
+        set1.setDrawValues(false);
+        set1.setValueTextSize(10f);
+        set1.setValueTextColor(Color.rgb(240, 238, 70));
 
 
         set1.setDrawHorizontalHighlightIndicator(false);
@@ -128,7 +130,9 @@ public class graphActivity extends ActionBarActivity {
         LineData data = new LineData(xVals, set1);
 
         data.setValueTextSize(9f);
-        data.setDrawValues(false);
+        //data.setDrawValues(true);
+
+
 
         // set data
         mChart.setData(data);
