@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/picture"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/nav_header_bg" />
+
+    </RelativeLayout>
+
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:hint="Name"
+        app:met_floatingLabel="normal"
+        app:met_iconLeft="@drawable/ic_action_location_found_dark"
+        app:met_iconPadding="0dp" />
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:hint="sa"
+        app:met_floatingLabel="normal"
+        app:met_iconLeft="@drawable/ic_action_location_found_dark"
+        app:met_iconPadding="0dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:hint="Age"
+        app:met_floatingLabel="normal"
+        app:met_iconLeft="@drawable/ic_action_location_found_dark"
+        app:met_iconPadding="0dp" />
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:hint="weight"
+        app:met_floatingLabel="normal"
+        app:met_iconLeft="@drawable/ic_action_location_found_dark"
+        app:met_iconPadding="0dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:hint="Age"
+        app:met_floatingLabel="normal"
+        app:met_iconLeft="@drawable/ic_action_location_found_dark"
+        app:met_iconPadding="0dp" />
+
+
+</LinearLayout>

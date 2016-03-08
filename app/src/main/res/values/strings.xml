@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Pet</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="logo_name">lana</string>
+    <string name="btn_pair">Strat Pairing</string>
+    <string name="btn_pet">Hello, My Pets</string>
+
+
+    <string-array name="species">
+        <item></item>
+    </string-array>
+    <string-array name="blood">
+        <item>A</item>
+        <item>B</item>
+        <item>O</item>
+        <item>AB</item>
+    </string-array>
 </resources>

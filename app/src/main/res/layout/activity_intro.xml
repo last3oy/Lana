@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ralativelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="kmutt.senior.pet.activity.IntroActivity">
@@ -21,21 +20,18 @@
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleimage"
-            android:layout_width="216dp"
-            android:layout_height="216dp"
-            android:layout_margin="40dp"
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_width"
+            android:layout_marginTop="@dimen/logo_margin"
             android:src="@drawable/logo" />
 
         <TextView
-            android:id="@+id/txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-14dp"
-            android:text="lana"
-            android:textColor="#fff"
-            android:textSize="50sp" />
+            android:text="@string/logo_name"
+            android:textColor="@color/activity_intro_text_color"
+            android:textSize="@dimen/logo_name_size" />
 
     </LinearLayout>
 
@@ -47,22 +43,22 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btn_pair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/wel_btnfill0"
-            android:text="Strat Paring"
-            android:textColor="#fff" />
+            android:layout_marginBottom="@dimen/btn_pair_bottom_margin"
+            android:background="@drawable/btn_pair"
+            android:text="@string/btn_pair"
+            android:textColor="@color/activity_intro_text_color" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_pet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
-            android:background="@drawable/wel_btn"
-            android:text="Hello, My Pets"
-            android:textColor="#fff" />
+            android:layout_marginBottom="@dimen/btn_pet_bottom_margin"
+            android:background="@drawable/btn_pet"
+            android:text="@string/btn_pet"
+            android:textColor="@color/activity_intro_text_color" />
     </LinearLayout>
 
 </RelativeLayout>
