@@ -31,7 +31,8 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/logo_name"
             android:textColor="@color/activity_intro_text_color"
-            android:textSize="@dimen/logo_name_size" />
+            android:textSize="@dimen/logo_name_size"
+            android:fontFamily="sans-serif-light"/>
 
     </LinearLayout>
 
@@ -57,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/btn_pet_bottom_margin"
             android:background="@drawable/btn_pet"
-            android:text="@string/btn_pet"
+            android:text="@string/btn_dog"
             android:textColor="@color/activity_intro_text_color" />
     </LinearLayout>
 

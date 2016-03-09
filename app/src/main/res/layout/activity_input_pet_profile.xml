@@ -1,77 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="kmutt.senior.pet.activity.InputPetProfileActivity"
-    android:orientation="vertical">
+    tools:context="kmutt.senior.pet.activity.InputPetProfileActivity">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/picture_profile"
-            android:layout_width="144dp"
-            android:layout_height="144dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="16dp"
-            android:src="@drawable/nav_header_bg" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/picture_profile"
+                    android:layout_width="144dp"
+                    android:layout_height="144dp"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/activity_vertical_margin"
+                    android:src="@drawable/nav_header_bg" />
+
+            </RelativeLayout>
 
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/btn_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:hint="Name"
-        app:met_floatingLabel="normal"
-        app:met_iconLeft="@drawable/ic_action_location_found_dark"
-        app:met_iconPadding="0dp" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_name"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_pets_black_24dp"
+                app:met_iconPadding="0dp" />
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/spinner_species"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:hint="sa"
-        app:met_floatingLabel="normal"
-        app:met_iconLeft="@drawable/ic_action_location_found_dark"
-        app:met_iconPadding="0dp" />
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinner_breed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_breed"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_info_black_24dp"
+                app:met_iconPadding="0dp" />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:hint="Age"
-        app:met_floatingLabel="normal"
-        app:met_iconLeft="@drawable/ic_action_location_found_dark"
-        app:met_iconPadding="0dp" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_weight"
+                android:inputType="number"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_toys_black_24dp"
+                app:met_iconPadding="0dp" />
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/spinner2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:hint="weight"
-        app:met_floatingLabel="normal"
-        app:met_iconLeft="@drawable/ic_action_location_found_dark"
-        app:met_iconPadding="0dp" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_age"
+                android:inputType="number"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_cake_black_24dp"
+                app:met_iconPadding="0dp" />
 
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:hint="Age"
-        app:met_floatingLabel="normal"
-        app:met_iconLeft="@drawable/ic_action_location_found_dark"
-        app:met_iconPadding="0dp" />
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinner_blood_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_blood"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_opacity_black_24dp"
+                app:met_iconPadding="0dp" />
 
-</LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="16dp" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

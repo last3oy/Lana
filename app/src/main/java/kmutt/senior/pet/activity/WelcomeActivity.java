@@ -17,22 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        /*CircleImageView t = (CircleImageView)findViewById(R.id.picture);
-        t.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(IntroActivity.this,
-                        "The favorite list would appear on clicking this icon",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        MaterialBetterSpinner  textView = (MaterialBetterSpinner)
-                findViewById(R.id.spinner);
-
-        textView.setAdapter(adapter);*/
     }
 
 
