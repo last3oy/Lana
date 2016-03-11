@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kmutt.senior.pet">
 
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
 
     <application
         android:allowBackup="true"
@@ -12,10 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".activity.WelcomeActivity"></activity>
+        <activity android:name=".activity.InputPetProfileActivity">
 
         </activity>
-        <activity android:name=".activity.InputPetProfileActivity">
+        <activity android:name=".activity.BluetoothActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
