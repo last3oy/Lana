@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(newActivity);
             }
         });
+        final Button btn2 = (Button) findViewById(R.id.button1);
+        // Perform action on click
+        btn2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent newActivity = new Intent(MainActivity.this,textActivity.class);
+                startActivity(newActivity);
+            }
+        });
     }
 
     private void initInstances() {
