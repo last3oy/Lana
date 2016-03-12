@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <resources>
 
     <style name="AppTheme.NoActionBar">
@@ -7,3 +8,11 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+</resources>
+>>>>>>> 848ef300a4d86991ae625bc8a961e8b7efd8027c
