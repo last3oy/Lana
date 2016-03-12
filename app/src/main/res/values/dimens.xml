@@ -2,17 +2,5 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-<<<<<<< HEAD
     <dimen name="fab_margin">16dp</dimen>
-=======
-    <dimen name="left_margin">16dp</dimen>
-    <dimen name="right_margin">16dp</dimen>
-    <dimen name="logo_margin">24dp</dimen>
-    <dimen name="logo_width">216dp</dimen>
-    <dimen name="logo_name_size">50sp</dimen>
-    <dimen name="btn_pet_bottom_margin">60dp</dimen>
-    <dimen name="btn_pair_bottom_margin">8dp</dimen>
-
-    <dimen name="nav_header_height">192dp</dimen>
->>>>>>> 848ef300a4d86991ae625bc8a961e8b7efd8027c
 </resources>

@@ -1,42 +1,9 @@
 <resources>
     <string name="app_name">Pet</string>
-<<<<<<< HEAD
     <string name="hello_world">Hello world!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_bluetooth">bluetoothActivity</string>
     <string name="title_activity_graph">graphActivity</string>
-=======
-    <string name="hello_world">Hello World</string>
-    <string name="logo_name">lana</string>
-    <string name="btn_pair">Start Pairing</string>
-    <string name="btn_dog">Hello, My Dogs</string>
-    <string name="edt_hint_name">Dog\'s name</string>
-    <string name="edt_hint_blood">Blood Type</string>
-    <string name="edt_hint_age">Age (year)</string>
-    <string name="edt_hint_weight">Weight (Kg)</string>
-    <string name="edt_hint_breed">Breed of Dog</string>
-
-
-    <string-array name="breed">
-        <item>a</item>
-        <item>b</item>
-        <item>c</item>
-        <item>d</item>
-        <item>e</item>
-        <item>f</item>
-        <item>g</item>
-        <item>h</item>
-        <item>i</item>
-        <item>j</item>
-        <item>k</item>
-    </string-array>
-    <string-array name="blood">
-        <item>A</item>
-        <item>B</item>
-        <item>O</item>
-        <item>AB</item>
-    </string-array>
->>>>>>> 848ef300a4d86991ae625bc8a961e8b7efd8027c
 </resources>

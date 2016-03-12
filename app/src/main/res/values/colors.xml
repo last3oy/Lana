@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#384d5f</color>
-    <color name="colorPrimaryDark">#253441</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="nav_item_icon_tint_color">#333</color>
-    <color name="nav_item_text_color">#333</color>
-    <color name="activity_intro_text_color">#fff</color>
 </resources>

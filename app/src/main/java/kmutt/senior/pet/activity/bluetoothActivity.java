@@ -1,151 +1,105 @@
 package kmutt.senior.pet.activity;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
+import app.akexorcist.bluetoothspp.BluetoothSPP;
+import app.akexorcist.bluetoothspp.BluetoothState;
+import app.akexorcist.bluetoothspp.DeviceList;
 import kmutt.senior.pet.R;
 
-public class BluetoothActivity extends AppCompatActivity {
-
-    private final int REQUEST_ENABLE_BT = 10;
-    private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
-    BluetoothAdapter mBluetoothAdapter;
-    private Button btnscan;
-    private Button btncancel;
-    private ProgressDialog mProgressDlg;
-
-
+public class bluetoothActivity extends AppCompatActivity {
+    BluetoothSPP bt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        btnscan = (Button) findViewById(R.id.scan);
-        btncancel = (Button) findViewById(R.id.cancel);
+        bt = new BluetoothSPP(this);
 
-        mProgressDlg = new ProgressDialog(this);
-        mProgressDlg.setMessage("Scanning...");
-        mProgressDlg.setCancelable(false);
-        mProgressDlg.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+        if(!bt.isBluetoothAvailable()) {
+            Toast.makeText(getApplicationContext()
+                    , "Bluetooth is not available"
+                    , Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
-                mBluetoothAdapter.cancelDiscovery();
+        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
+            public void onDataReceived(byte[] data, String message) {
+                Toast.makeText(bluetoothActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
 
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            // Device does not support Bluetooth
-        }
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        btnscan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("TEST", "scan clicked");
-                if (mBluetoothAdapter.isDiscovering()) {
-                    mBluetoothAdapter.cancelDiscovery();
-                }
-                mBluetoothAdapter.startDiscovery();
-                mProgressDlg.show();
+        bt.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() {
+            public void onDeviceConnected(String name, String address) {
+                Toast.makeText(getApplicationContext()
+                        , "Connected to " + name + "\n" + address
+                        , Toast.LENGTH_SHORT).show();
+            }
+
+            public void onDeviceDisconnected() {
+                Toast.makeText(getApplicationContext()
+                        , "Connection lost", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onDeviceConnectionFailed() {
+                Toast.makeText(getApplicationContext()
+                        , "Unable to connect", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btncancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("TEST", "cancel clicked");
-                mBluetoothAdapter.cancelDiscovery();
-            }
-        });
+        if(!bt.isBluetoothEnabled()) {
+            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(intent, BluetoothState.REQUEST_ENABLE_BT);
 
-
-        IntentFilter filter = new IntentFilter();
-
-        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-
-        registerReceiver(mReceiver, filter);
-
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case REQUEST_ENABLE_BT:
-                if (resultCode == RESULT_OK) {
-                    mBluetoothAdapter.enable();
-                    Log.v("Tor", "Tor law na ja");
-                    mBluetoothAdapter.startDiscovery();
-                } else {
-                    Toast.makeText(this, "bluetooth disable", Toast.LENGTH_LONG).show();
-                    mBluetoothAdapter.disable();
-                }
+        }else{
+            bt.setupService();
+            bt.startService(BluetoothState.DEVICE_OTHER);
+            setup();
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //mBluetoothAdapter.cancelDiscovery();
+
+    public void setup() {
+        Intent intent = new Intent(bluetoothActivity.this, DeviceList.class);
+        startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
     }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+            if(resultCode == Activity.RESULT_OK)
+                bt.connect(data);
+        } else if(requestCode == BluetoothState.REQUEST_ENABLE_BT) {
+            if(resultCode == Activity.RESULT_OK) {
+                bt.setupService();
+                bt.startService(BluetoothState.DEVICE_OTHER);
 
-    @Override
-    protected void onDestroy() {
-
-        unregisterReceiver(mReceiver);
+            } else {
+                // Do something if user doesn't choose any device (Pressed back)
+            }
+        }
+    }
+    public void onDestroy() {
         super.onDestroy();
+        bt.stopService();
     }
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
-                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
-
-                if (state == BluetoothAdapter.STATE_ON) {
-                    Log.d("TEST","ON");
-                }
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                //mDeviceList = new ArrayList<BluetoothDevice>();
-                Log.d("TEST","scanning ");
-                mProgressDlg.show();
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                Log.d("TEST","stop scanning ");
-                mProgressDlg.dismiss();
-
-
-            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                mDeviceList.add(device);
-                Log.d("TEST","found "+device.getName());
+    public void onStart() {
+        super.onStart();
+        if(!bt.isBluetoothEnabled()) {
+            bt.enable();
+        } else {
+            if(!bt.isServiceAvailable()) {
+                bt.setupService();
+                bt.startService(BluetoothState.DEVICE_OTHER);
 
             }
         }
-    };
+    }
 }
