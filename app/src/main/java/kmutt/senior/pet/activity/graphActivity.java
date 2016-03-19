@@ -18,6 +18,7 @@ import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kmutt.senior.pet.R;
 
@@ -93,10 +94,11 @@ public class graphActivity extends ActionBarActivity {
         mChart.setMarkerView(mv);
     }
     private void setData(int count, float range) {
-
+        dataActivity myDb = new dataActivity(this);
+        List<Getdata> MebmerList = myDb.SelectAllData();
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i = 0; i < count; i++) {
-            xVals.add((1990 +i) + "");
+            xVals.add(MebmerList(i));
         }
 
         ArrayList<Entry> vals1 = new ArrayList<Entry>();

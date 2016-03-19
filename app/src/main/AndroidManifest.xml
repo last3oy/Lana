@@ -22,12 +22,12 @@
             android:name=".activity.bluetoothActivity"
             android:label="@string/title_activity_bluetooth"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activity.graphActivity"
             android:label="@string/title_activity_graph"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.textActivity"></activity>
+        <activity android:name=".activity.textActivity" />
+        <activity android:name=".activity.dataActivity"></activity>
     </application>
 
 </manifest>
