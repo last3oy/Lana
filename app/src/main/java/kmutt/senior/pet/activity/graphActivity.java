@@ -4,6 +4,7 @@ package kmutt.senior.pet.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -96,19 +97,17 @@ public class graphActivity extends ActionBarActivity {
     private void setData(int count, float range) {
         dataActivity myDb = new dataActivity(this);
         List<Getdata> MebmerList = myDb.SelectAllData();
+
         ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < count; i++) {
-            xVals.add(MebmerList(i));
-        }
-
         ArrayList<Entry> vals1 = new ArrayList<Entry>();
+        int i = 0;
+        for (Getdata getdata : MebmerList) {
+            Log.wtf("LookX",getdata.gTime());
+            Log.wtf("LookY",""+getdata.gPulse());
+            xVals.add(getdata.gTime());
+            vals1.add(new Entry(getdata.gPulse(),i));
+            i++;
 
-        for (int i = 0; i < count; i++) {
-            float mult = (range + 1);
-            float val = (float) (Math.random() * mult) + 20;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            vals1.add(new Entry(val, i));
         }
 
         // create a dataset and give it a type
@@ -133,7 +132,7 @@ public class graphActivity extends ActionBarActivity {
         });
 
         // create a data object with the datasets
-        LineData data = new LineData(xVals, set1);
+        LineData data = new LineData(xVals , set1);
 
         data.setValueTextSize(9f);
         //data.setDrawValues(true);

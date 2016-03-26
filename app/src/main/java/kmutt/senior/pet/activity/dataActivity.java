@@ -76,6 +76,16 @@ public class dataActivity extends SQLiteOpenHelper {
             String strSQL = "SELECT  * FROM " + TABLE_MEMBER;
             Cursor cursor = db.rawQuery(strSQL, null);
 
+            int count = cursor.getCount();
+
+            /*String[] Time = new String[count];
+            int[] Pulse = new int[count];
+            for (int m = 0; m < count; m++) {
+                cursor.moveToNext();
+                Time[m] = cursor.getString(0);
+
+                Pulse[m] = cursor.getInt(1);
+            }*/
             if(cursor != null)
             {
                 if (cursor.moveToFirst()) {
@@ -91,8 +101,8 @@ public class dataActivity extends SQLiteOpenHelper {
             cursor.close();
             db.close();
             return MemberList;
-
-        } catch (Exception e) {
+        }
+         catch (Exception e) {
             return null;
         }
 

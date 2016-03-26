@@ -9,28 +9,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="kmutt.senior.pet.activity.textActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <TextView
-        android:id="@+id/randomTextView"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:background="#008080"
+        android:padding="5dp"
+        android:text="Android Read and Write Text form File"
+        android:textColor="#fff" />
 
-    <ListView
+    <EditText
+        android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView1"
-        android:layout_below="@+id/randomTextView"
-        android:layout_marginTop="57dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="22dp"
+        android:ems="10"
+        android:layout_margin="5dp">
+        <requestFocus />
+    </EditText>
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/button1"
+        android:text="Read Text From file"
+        android:onClick="ReadBtn"
+        android:layout_margin="5dp" />
 </RelativeLayout>
 
