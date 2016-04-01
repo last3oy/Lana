@@ -10,18 +10,24 @@
     tools:context="kmutt.senior.pet.activity.BluetoothActivity">
 
     <Button
-        android:id="@+id/scan"
+        android:id="@+id/btn_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="scan"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/cancel"
+        android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="cancel"
         android:textAllCaps="false"
-        android:layout_below="@+id/scan"/>
-
+        android:layout_below="@+id/btn_scan"/>
+    <ListView
+        android:id="@+id/lv_paired"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_cancel"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:cacheColorHint="#00000000" />
 </RelativeLayout>
