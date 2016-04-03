@@ -1,27 +1,39 @@
 package kmutt.senior.pet.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Toast;
 
 
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.IOException;
 
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
-import kmutt.senior.pet.fragment.InputPetProfileFragment;
+import kmutt.senior.pet.bus.Contextor;
 
-public class InputPetProfileActivity extends AppCompatActivity {
+
+public class InputPetProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final int SELECT_PHOTO = 1;
-
+    MaterialBetterSpinner spinnerBreed;
+    CircleImageView imageViewPictureProfile;
+    String[] BREED;
+    Button btnSummit;
+    ArrayAdapter<String> adapter_breed;
     Toolbar toolbar;
 
     @Override
@@ -33,11 +45,11 @@ public class InputPetProfileActivity extends AppCompatActivity {
         initInstances();
 
 
-        if(savedInstanceState == null){
+       /*if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.contentContainer, InputPetProfileFragment.newInstance())
                     .commit();
-        }
+        }*/
 
     }
 
@@ -47,28 +59,53 @@ public class InputPetProfileActivity extends AppCompatActivity {
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /*
+
+        BREED = getResources().getStringArray(R.array.breed);
 
 
-        */
+        spinnerBreed = (MaterialBetterSpinner) findViewById(R.id.spinner_breed);
+        imageViewPictureProfile = (CircleImageView) findViewById(R.id.picture_profile);
+        btnSummit = (Button) findViewById(R.id.btnSummit);
+
+
+        adapter_breed = new ArrayAdapter<String>(Contextor.getInstance().getContext(),
+                android.R.layout.simple_dropdown_item_1line, BREED);
+
+        spinnerBreed.setAdapter(adapter_breed);
+
+        imageViewPictureProfile.setOnClickListener(this);
+        btnSummit.setOnClickListener(this);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case SELECT_PHOTO:
-                if (resultCode == RESULT_OK) {
-                    try {
-                        final Uri imageUri = imageReturnedIntent.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                if (resultCode == Activity.RESULT_OK) {
+                    /*try {
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        //imageViewPictureProfile.setImageBitmap(selectedImage);
+                        imageViewPictureProfile.setImageBitmap(selectedImage);
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
+                    }*/
+                    Uri uri = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        imageViewPictureProfile.setImageBitmap(bitmap);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+
+                    /*InputPetProfileActivity activity = (InputPetProfileActivity) getActivity();
+                    Bitmap bitmap = getBitmapFromCameraData(data, activity);
+                    imageViewPictureProfile.setImageBitmap(bitmap);
+                    */
 
                 }
         }
@@ -84,5 +121,26 @@ public class InputPetProfileActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClick(View v) {
+        if (v == imageViewPictureProfile) {
+            Toast.makeText(this,
+                    "The favorite list would appear on clicking this icon",
+                    Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(Intent.createChooser(intent
+                    , "Select photo from"), SELECT_PHOTO);
+
+        } else if (v == btnSummit) {
+            finish();
+
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
     }
 }

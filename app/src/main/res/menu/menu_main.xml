@@ -4,8 +4,7 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:icon="@mipmap/ic_launcher"
         android:orderInCategory="100"
-        android:title="ssss"
-        app:showAsAction="ifRoom" />
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
 </menu>

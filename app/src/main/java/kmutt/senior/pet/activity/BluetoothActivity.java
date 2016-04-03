@@ -74,6 +74,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
+
+
         initInstances();
 
 

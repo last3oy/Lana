@@ -9,26 +9,26 @@
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
 
-
     <application
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".MainApplication">
-        <activity android:name=".activity.MainActivity" />
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.WelcomeActivity">
-
-        </activity>
-        <activity android:name=".activity.InputPetProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BluetoothActivity">
+        <activity android:name=".activity.InputPetProfileActivity">
+
+        </activity>
+        <activity android:name=".activity.BluetoothActivity" />
+        <activity android:name=".activity.ProfileActivity">
 
         </activity>
     </application>
