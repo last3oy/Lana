@@ -89,7 +89,7 @@ public class graphActivity extends ActionBarActivity {
 
         // dont forget to refresh the drawing
         mChart.invalidate();
-        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+        MyMarkerView mv = new MyMarkerView(this,R.layout.custom_marker_view);
 
         // set the marker to the chart
         mChart.setMarkerView(mv);
@@ -102,6 +102,8 @@ public class graphActivity extends ActionBarActivity {
         ArrayList<Entry> vals1 = new ArrayList<Entry>();
         int i = 0;
         for (Getdata getdata : MebmerList) {
+            Log.wtf("LookX",getdata.gName());
+            Log.wtf("LookX",getdata.gDate());
             Log.wtf("LookX",getdata.gTime());
             Log.wtf("LookY",""+getdata.gPulse());
             xVals.add(getdata.gTime());

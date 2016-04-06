@@ -2,162 +2,108 @@ package kmutt.senior.pet.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
-import java.util.List;
 
 import kmutt.senior.pet.R;
-import kmutt.senior.pet.fragment.FragmentTemplate;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
-
-
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle drawerToggle;
+    NavigationView navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SQLiteDatabase db;
+
         dataActivity myDb = new dataActivity(this);
 
-        myDb.getWritableDatabase();
-        long flg1 = myDb.InsertData("11:00", 70 );
+        //long flg1 = myDb.InsertData("Mali","4/04/2016","13:00", 185);
 
-        List<Getdata> MebmerList = myDb.SelectAllData();
-        for (Getdata mem : MebmerList) {
-            Toast.makeText(MainActivity.this, "MemberID = " + mem.gTime()
-                            + "," + mem.gPulse(),
-                    Toast.LENGTH_LONG).show();
-        }
-            initInstances();
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentContainer, FragmentTemplate.newInstance())
-                    .commit();
-        }
-        final Button btn1 = (Button) findViewById(R.id.button);
-        // Perform action on click
-        btn1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent newActivity = new Intent(MainActivity.this,graphActivity.class);
-                startActivity(newActivity);
-            }
-        });
-        final Button btn2 = (Button) findViewById(R.id.button1);
-        // Perform action on click
-        btn2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent newActivity = new Intent(MainActivity.this,textActivity.class);
-                startActivity(newActivity);
-            }
-        });
+        initInstances();
     }
 
-    private void initInstances() {
+    private void initInstances(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(
-                MainActivity.this
-                , drawerLayout
-                , R.string.hello_world
-                , R.string.hello_world
-        );
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerToggle = new ActionBarDrawerToggle(
+                MainActivity.this,
+                drawerLayout,
+                R.string.hello_world,
+                R.string.hello_world);
+        drawerLayout.addDrawerListener(drawerToggle);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        navigation = (NavigationView) findViewById(R.id.navigation);
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+
+                Fragment fragment = null;
+                switch (id) {
+                    case R.id.navItem1:
+                        break;
+                    case R.id.navItem2:
+                        break;
+                    case R.id.navItem3:
+                        Intent intent = new Intent(MainActivity.this, InputPetProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.navItem5:
+                        Intent intents = new Intent(MainActivity.this, graphActivity.class);
+                        startActivity(intents);
+
+                        break;
+                }
+
+
+
+                return false;
+            }
+        });
+
+
+
     }
 
-
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+    public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
+        drawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+        if(drawerToggle.onOptionsItemSelected(item)){
             return true;
         }
-
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-
         return super.onOptionsItemSelected(item);
     }
 
-/*
-
     @Override
-    protected void onResume() {
-        super.onResume();
-        MainBus.getInstance().register(this);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MainBus.getInstance().unregister(this);
-    }
-
-    @Subscribe
-    public void busEventReceived(BusEventDessert event){
-        DessertListManager.getInstance().setSelectedDao(event.getDao());
-
-        // TODO : Check Mobile/Tablet
-
-
-        FrameLayout moreInfoFrameLayout = (FrameLayout) findViewById(R.id.moreContainer);
-        if(moreInfoFrameLayout == null){
-            //mobile
-            Intent intent = new Intent(MainActivity.this,MoreInfoActivity.class);
-            startActivity(intent);
-        }else {
-            //tablet
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.contentContainer, MoreInfoFragment.newInstance())
-                    .commit();
-        }
-
-        //ทำให้เป็น paselable แล้วส่ง extra ไป
-    }*/
 }

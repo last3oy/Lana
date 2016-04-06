@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="kmutt.senior.pet.activity.InputPetProfileActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/picture_profile"
+                android:layout_width="144dp"
+                android:layout_height="144dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:src="@drawable/nav_header_bg" />
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_name"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_pets_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinner_breed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_breed"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_info_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_weight"
+                android:inputType="number"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_toys_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edt_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_age"
+                android:inputType="number"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_cake_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <Button
+                android:id="@+id/btnSummit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="GO!" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

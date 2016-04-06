@@ -15,8 +15,8 @@ public class dataActivity extends SQLiteOpenHelper {
 
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "mydatabase";
-    private static final String TABLE_MEMBER = "pulse";
+    private static final String DATABASE_NAME = "mydata";
+    private static final String TABLE_MEMBER = "pul";
 
     public dataActivity(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,10 +29,11 @@ public class dataActivity extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_MEMBER +
-
-                "(Time TEXT(10) PRIMARY KEY," +
-
-                " Pulse INTEGER)");
+                "(Name TEXT(20)," +
+                "Date TEXT(20) NOT NULL," +
+                "Time TEXT(20) NOT NULL ," +
+                " Pulse INTEGER" +
+                "PRIMARY KEY (Date, Time))");
 
         Log.d("CREATE TABLE", "Create Table Successfully.");
 
@@ -43,7 +44,7 @@ public class dataActivity extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public long InsertData(String strTIME, Integer intpulse) {
+    public long InsertData(String strName, String strDate, String strTIME, Integer intpulse) {
         try {
             SQLiteDatabase db;
             db = this.getWritableDatabase(); // Write Data
@@ -51,6 +52,8 @@ public class dataActivity extends SQLiteOpenHelper {
 
 
             ContentValues Val = new ContentValues();
+            Val.put("Name", strName);
+            Val.put("Date", strDate);
             Val.put("Time", strTIME);
             Val.put("Pulse", intpulse);
 
@@ -91,8 +94,10 @@ public class dataActivity extends SQLiteOpenHelper {
                 if (cursor.moveToFirst()) {
                     do {
                         Getdata cMember = new Getdata();
-                        cMember.sTime(cursor.getString(0));
-                        cMember.sPulse(cursor.getInt(1));
+                        cMember.sName(cursor.getString(0));
+                        cMember.sDate(cursor.getString(1));
+                        cMember.sTime(cursor.getString(2));
+                        cMember.sPulse(cursor.getInt(3));
 
                         MemberList.add(cMember);
                     } while (cursor.moveToNext());
