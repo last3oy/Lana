@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         dataActivity myDb = new dataActivity(this);
 
-        //long flg1 = myDb.InsertData("Mali","4/04/2016","13:00", 185);
+        myDb.InsertData("Mali","4/04/2016","15:00", 195);
 
         initInstances();
     }

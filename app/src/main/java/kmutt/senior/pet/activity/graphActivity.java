@@ -4,7 +4,6 @@ package kmutt.senior.pet.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -81,7 +80,7 @@ public class graphActivity extends ActionBarActivity {
         l.setForm(Legend.LegendForm.LINE);
         mChart.invalidate();
         // add data
-        setData(45, 100);
+        setData(45,100);
 
         mChart.getLegend().setEnabled(true);
 
@@ -102,10 +101,10 @@ public class graphActivity extends ActionBarActivity {
         ArrayList<Entry> vals1 = new ArrayList<Entry>();
         int i = 0;
         for (Getdata getdata : MebmerList) {
-            Log.wtf("LookX",getdata.gName());
-            Log.wtf("LookX",getdata.gDate());
-            Log.wtf("LookX",getdata.gTime());
-            Log.wtf("LookY",""+getdata.gPulse());
+           // Log.wtf("LookX",""+getdata.gName());
+           // Log.wtf("LookX",""+getdata.gDate());
+           // Log.wtf("LookX",""+getdata.gTime());
+         //   Log.wtf("LookY",""+getdata.gPulse());
             xVals.add(getdata.gTime());
             vals1.add(new Entry(getdata.gPulse(),i));
             i++;

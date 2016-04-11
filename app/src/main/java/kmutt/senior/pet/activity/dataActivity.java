@@ -15,8 +15,8 @@ public class dataActivity extends SQLiteOpenHelper {
 
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "mydata";
-    private static final String TABLE_MEMBER = "pul";
+    private static final String DATABASE_NAME = "mydataaa";
+    private static final String TABLE_MEMBER = "pulaa";
 
     public dataActivity(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,10 +29,10 @@ public class dataActivity extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_MEMBER +
-                "(Name TEXT(20)," +
+                "(Name TEXT(20)NOT NULL," +
                 "Date TEXT(20) NOT NULL," +
                 "Time TEXT(20) NOT NULL ," +
-                " Pulse INTEGER" +
+                "Pulse INTEGER(20) NOT NULL ," +
                 "PRIMARY KEY (Date, Time))");
 
         Log.d("CREATE TABLE", "Create Table Successfully.");
