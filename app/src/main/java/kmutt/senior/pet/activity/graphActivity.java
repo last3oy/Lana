@@ -4,7 +4,8 @@ package kmutt.senior.pet.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.WindowManager;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -32,15 +33,21 @@ public class graphActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+       //         WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_graph);
+        Toolbar toolbar;
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mChart = (LineChart) findViewById(R.id.chart1);
 
 
-        mChart.setBackgroundColor(Color.WHITE);
+        mChart.setBackgroundColor(Color.TRANSPARENT);
 
         // no description text
         mChart.setDescription("");
@@ -61,18 +68,18 @@ public class graphActivity extends ActionBarActivity {
 
         XAxis x = mChart.getXAxis();
         //x.setAvoidFirstLastClipping(true);
-        x.setTextColor(Color.BLUE);
+        x.setTextColor(Color.rgb(37,52,65));
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
-        //x.setDrawGridLines(false);
-        x.setAxisLineColor(Color.BLACK);
-        x.setDrawAxisLine(true);
+        x.setDrawGridLines(false);
+       x.setAxisLineColor(Color.rgb(56,77,95));
+        //x.setDrawAxisLine(true);
 
         YAxis y = mChart.getAxisLeft();
 
-        y.setTextColor(Color.BLUE);
+        y.setTextColor(Color.rgb(37,52,65));
 
-        //y.setDrawGridLines(false);
-        y.setAxisLineColor(Color.BLACK);
+        y.setDrawGridLines(false);
+        y.setAxisLineColor(Color.rgb(56,77,95));
 
 
         mChart.getAxisRight().setEnabled(false);
@@ -112,16 +119,16 @@ public class graphActivity extends ActionBarActivity {
         }
 
         // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(vals1, "DataSet 1");
-        set1.setColor(Color.rgb(60, 220, 78));
+        LineDataSet set1 = new LineDataSet(vals1,"" );
+        set1.setColor(Color.rgb(56,77,95));
         set1.setLineWidth(1f);
-        set1.setCircleColor(Color.rgb(240, 238, 70));
+        set1.setCircleColor(Color.rgb(37,52,65));
         set1.setCircleRadius(5f);
-        set1.setFillColor(Color.rgb(240, 238, 70));
-        //set1.setDrawCubic(true);
+        set1.setFillColor(Color.rgb(37,52,65));
+        set1.setDrawCubic(true);
         set1.setDrawValues(false);
         set1.setValueTextSize(10f);
-        set1.setValueTextColor(Color.rgb(240, 238, 70));
+        set1.setValueTextColor(Color.rgb(37,52,65));
 
 
         set1.setDrawHorizontalHighlightIndicator(false);
@@ -143,5 +150,12 @@ public class graphActivity extends ActionBarActivity {
         // set data
         mChart.setData(data);
 
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

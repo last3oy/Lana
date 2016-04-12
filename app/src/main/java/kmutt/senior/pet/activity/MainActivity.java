@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         dataActivity myDb = new dataActivity(this);
 
-        myDb.InsertData("Mali","4/04/2016","15:00", 195);
 
+        //myDb.InsertData("Mali","4/04/2016","20:00", 165);
         initInstances();
     }
 
