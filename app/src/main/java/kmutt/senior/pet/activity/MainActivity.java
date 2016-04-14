@@ -49,13 +49,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 int id = menuItem.getItemId();
+                Intent intent;
                 switch (id) {
                     case R.id.navItem1:
                         break;
                     case R.id.navItem2:
+                        intent = new Intent(MainActivity.this, SelectProfileActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.navItem3:
-                        Intent intent = new Intent(MainActivity.this, InputPetProfileActivity.class);
+                        intent = new Intent(MainActivity.this, InputPetProfileActivity.class);
                         startActivity(intent);
                         break;
                 }

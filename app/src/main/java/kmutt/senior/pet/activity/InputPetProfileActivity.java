@@ -47,7 +47,6 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
     Button btnSummit;
     ArrayAdapter<String> adapter_breed;
     ArrayAdapter<String> adapter_size;
-    Toolbar toolbar;
     DogProfile profile;
 
     @Override
@@ -75,6 +74,7 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Add my dog");
 
         BREED = getResources().getStringArray(R.array.breed);
         SIZE = getResources().getStringArray(R.array.size);
