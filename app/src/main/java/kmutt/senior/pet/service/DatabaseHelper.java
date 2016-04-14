@@ -2,9 +2,15 @@ package kmutt.senior.pet.service;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.nfc.Tag;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import kmutt.senior.pet.model.DogProfile;
 
@@ -72,6 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //insert----
     public long createProfile(DogProfile dogProfile) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -87,4 +94,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return profile_id;
 
     }
+
+
+    //select----
+
+    public ArrayList<DogProfile> getAllProfile() {
+        ArrayList<DogProfile> Profiles = new ArrayList<DogProfile>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PROFILE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor mCursor = db.rawQuery(selectQuery, null);
+
+        if (mCursor.moveToFirst()){
+            do {
+                DogProfile mDogProfile = new DogProfile();
+                mDogProfile.setDogId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
+                mDogProfile.setPicture(mCursor.getBlob(mCursor.getColumnIndex(KEY_PICTURE)));
+                mDogProfile.setDogName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
+                mDogProfile.setBreed(mCursor.getString(mCursor.getColumnIndex(KEY_BREED)));
+                mDogProfile.setSize(mCursor.getString(mCursor.getColumnIndex(KEY_SIZE)));
+                mDogProfile.setAge(mCursor.getInt(mCursor.getColumnIndex(KEY_AGE)));
+
+                Profiles.add(mDogProfile);
+            } while (mCursor.moveToNext());
+        }
+        if (mCursor != null && !mCursor.isClosed()) {
+            mCursor.close();
+        }
+        return Profiles;
+    }
+
+
+
+
 }

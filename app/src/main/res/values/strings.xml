@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pet</string>
+    <string name="app_name">LANA</string>
     <string name="hello_world">Hello World</string>
     <string name="logo_name">lana</string>
     <string name="btn_pair">Start Pairing</string>
@@ -34,7 +34,7 @@
     <string-array name="size">
         <item>Small (&lt;13 Kg)</item>
         <item>Medium-Large (13-40 Kg)</item>
-        <item>X-Large (&gt;40)</item>
+        <item>X-Large (&gt;40 Kg)</item>
     </string-array>
 
     <string name="title_activity_main2">Main2Activity</string>

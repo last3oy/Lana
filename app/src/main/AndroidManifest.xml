@@ -48,6 +48,11 @@
 
 
 
+        <activity android:name=".activity.SelectProfileActivity">
+
+        </activity>
+
+
         <activity android:name=".activity.ProfileActivity">
 
         </activity>

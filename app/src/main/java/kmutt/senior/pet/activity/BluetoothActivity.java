@@ -5,22 +5,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
-import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
-import android.bluetooth.le.ScanSettings;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +22,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +34,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
 
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
     private BluetoothAdapter mBluetoothAdapter;
-    private Button btnscan;
-    private Button btncancel;
+    private Button btnScan;
+    private Button btnCancel;
     private ProgressDialog mProgressDlg;
     private ListView mListView;
     private DeviceListAdapter mAdapter;
@@ -68,7 +57,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
         // Use this check to determine whether BLE is supported on the device. Then
         // you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "BLE Not Supported on this Device", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "BLE Not Supported on this Device", Toast.LENGTH_LONG).show();
             finish();
         }
         final BluetoothManager bluetoothManager =
@@ -83,15 +72,15 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
 
     private void initInstances() {
         mHandler = new Handler();
-        btnscan = (Button) findViewById(R.id.btn_scan);
-        btncancel = (Button) findViewById(R.id.btn_cancel);
+        btnScan = (Button) findViewById(R.id.btnScan);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
 
-        mListView = (ListView) findViewById(R.id.lv_paired);
+        mListView = (ListView) findViewById(R.id.lvBt);
 
         mAdapter = new DeviceListAdapter(this);
 
-        btnscan.setOnClickListener(this);
-        btncancel.setOnClickListener(this);
+        btnScan.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
         if (Build.VERSION.SDK_INT >= 21) {
             initcallbacklollipop();
         } else {
@@ -172,12 +161,12 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.btn_cancel:
+            case R.id.btnCancel:
                 scanLeDevice(false);
                 break;
-            case R.id.btn_scan:
+            case R.id.btnScan:
                 scanLeDevice(true);
-                btnscan.setEnabled(false);
+                btnScan.setEnabled(false);
                 break;
         }
     }
@@ -205,7 +194,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
                         mLeScanner.stopScan(mScanCallback);
 
                     }
-                    btnscan.setEnabled(true);
+                    btnScan.setEnabled(true);
                     mListView.setAdapter(mAdapter);
                 }
             }, SCAN_PERIOD);
@@ -221,7 +210,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
                 mLeScanner.stopScan(mScanCallback);
 
             }
-            btnscan.setEnabled(true);
+            btnScan.setEnabled(true);
             mListView.setAdapter(mAdapter);
         }
     }

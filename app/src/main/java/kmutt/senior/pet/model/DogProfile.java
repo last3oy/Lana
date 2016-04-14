@@ -1,20 +1,46 @@
 package kmutt.senior.pet.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by last3oy on 11/04/2016.
  */
-public class DogProfile {
+public class DogProfile implements Parcelable {
 
-    int dogId;
-    String dogName;
-    String breed;
-    String size;
-    int age;
+    public int dogId;
+    public String dogName;
+    public String breed;
+    public String size;
+    public int age;
     byte[] picture;
 
 
     public DogProfile() {
     }
+
+    protected DogProfile(Parcel in) {
+        dogId = in.readInt();
+        dogName = in.readString();
+        breed = in.readString();
+        size = in.readString();
+        age = in.readInt();
+        picture = in.createByteArray();
+    }
+
+    public static final Creator<DogProfile> CREATOR = new Creator<DogProfile>() {
+        @Override
+        public DogProfile createFromParcel(Parcel in) {
+            return new DogProfile(in);
+        }
+
+        @Override
+        public DogProfile[] newArray(int size) {
+            return new DogProfile[size];
+        }
+    };
+
+
 
     //Getter ---------
     public int getDogId() {
@@ -65,5 +91,21 @@ public class DogProfile {
 
     public void setPicture(byte[] picture) {
         this.picture = picture;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(dogId);
+        dest.writeString(dogName);
+        dest.writeString(breed);
+        dest.writeString(size);
+        dest.writeInt(age);
+        dest.writeByteArray(picture);
     }
 }

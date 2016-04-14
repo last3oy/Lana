@@ -3,38 +3,26 @@ package kmutt.senior.pet.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.LayerDrawable;
-
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-
 import android.util.Log;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
-
-
 import com.rengwuxian.materialedittext.MaterialEditText;
-
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
-import kmutt.senior.pet.bus.Contextor;
-
 import kmutt.senior.pet.model.DogProfile;
 import kmutt.senior.pet.service.DatabaseHelper;
 import kmutt.senior.pet.service.DbBitmapUtility;
@@ -57,7 +45,6 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
     Button btnSummit;
     ArrayAdapter<String> adapter_breed;
     ArrayAdapter<String> adapter_size;
-    Toolbar toolbar;
     DogProfile profile;
 
 
@@ -86,6 +73,7 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Add my dog");
 
         BREED = getResources().getStringArray(R.array.breed);
         SIZE = getResources().getStringArray(R.array.size);

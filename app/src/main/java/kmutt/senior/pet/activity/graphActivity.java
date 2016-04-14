@@ -38,8 +38,7 @@ public class graphActivity extends ActionBarActivity {
         setContentView(R.layout.activity_graph);
         Toolbar toolbar;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar1);
-        setSupportActionBar(toolbar);
+
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,10 +76,10 @@ public class graphActivity extends ActionBarActivity {
         YAxis y = mChart.getAxisLeft();
 
         y.setTextColor(Color.rgb(37,52,65));
-
+        y.setStartAtZero(false);
         y.setDrawGridLines(false);
         y.setAxisLineColor(Color.rgb(56,77,95));
-
+        
 
         mChart.getAxisRight().setEnabled(false);
         Legend l = mChart.getLegend();

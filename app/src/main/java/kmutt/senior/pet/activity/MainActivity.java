@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         dataActivity myDb = new dataActivity(this);
 
 
-        //myDb.InsertData("Mali","4/04/2016","20:00", 165);
+     //   myDb.InsertData("bb","14/04/2016","10:00", 175);
         initInstances();
 
 
@@ -59,26 +59,29 @@ public class MainActivity extends AppCompatActivity {
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem){
-            int id = menuItem.getItemId();
 
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                Intent intent;
+                switch (id) {
+                    case R.id.navItem1:
+                        intent = new Intent(MainActivity.this, BluetoothActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.navItem2:
+                        intent = new Intent(MainActivity.this, SelectProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.navItem3:
+                        intent = new Intent(MainActivity.this, InputPetProfileActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.navItem5:
+                        intent = new Intent(MainActivity.this, graphActivity.class);
+                        startActivity(intent);
+                        break;
+                }
 
-            Fragment fragment = null;
-            switch (id) {
-                case R.id.navItem1:
-                    break;
-                case R.id.navItem2:
-                    break;
-                case R.id.navItem3:
-                    Intent intent = new Intent(MainActivity.this, InputPetProfileActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.navItem5:
-                    Intent intents = new Intent(MainActivity.this, graphActivity.class);
-                    startActivity(intents);
-
-                    break;
-            }
                 return false;
             }
 
