@@ -112,6 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 mDogProfile.setDogName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
                 mDogProfile.setBreed(mCursor.getString(mCursor.getColumnIndex(KEY_BREED)));
                 mDogProfile.setSize(mCursor.getString(mCursor.getColumnIndex(KEY_SIZE)));
+                mDogProfile.setAge(mCursor.getInt(mCursor.getColumnIndex(KEY_AGE)));
 
                 Profiles.add(mDogProfile);
             } while (mCursor.moveToNext());

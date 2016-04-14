@@ -26,40 +26,35 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:text="Name: test"
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/tvBreed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="Name: test"
+            android:text="Breed: test"
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/tvSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="Name: test"
+            android:text="Size: test"
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/tvAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="Name: test"
+            android:text="Age: test year"
             android:textSize="24sp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Click me" />
+
     </LinearLayout>
 
 </RelativeLayout>

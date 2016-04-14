@@ -57,7 +57,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
         // Use this check to determine whether BLE is supported on the device. Then
         // you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "BLE Not Supported on this Device", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "BLE Not Supported on this Device", Toast.LENGTH_LONG).show();
             finish();
         }
         final BluetoothManager bluetoothManager =

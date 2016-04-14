@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent;
                 switch (id) {
                     case R.id.navItem1:
+                        intent = new Intent(MainActivity.this, BluetoothActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.navItem2:
                         intent = new Intent(MainActivity.this, SelectProfileActivity.class);
