@@ -9,8 +9,7 @@
     <string name="edt_hint_age">Age (year)</string>
     <string name="edt_hint_size">Size</string>
     <string name="edt_hint_breed">Breed of Dog</string>
-
-
+    <string name="calendar_date_picker_result_values">Year: %1$s\nMonth: %2$s\nDay: %3$s</string>
 
 
     <string-array name="breed">
@@ -44,7 +43,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="Graph">Hello blank fragment</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
->>>>>>> origin/pai
+    >>>>>>> origin/pai
 </resources>

@@ -3,10 +3,13 @@ package kmutt.senior.pet.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -21,24 +24,34 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kmutt.senior.pet.BaseSampleActivity;
 import kmutt.senior.pet.R;
 
-public class graphActivity extends ActionBarActivity {
+public class graphActivity  extends BaseSampleActivity
+        implements CalendarDatePickerDialogFragment.OnDateSetListener {
 
 
     private LineChart mChart;
 
-
-
+    private TextView mResultTextView;
+    private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
        //         WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_graph);
         Toolbar toolbar;
-
-
+        mResultTextView = (TextView) findViewById(R.id.text);
+        final Button button = (Button) findViewById(R.id.btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
+                        .setOnDateSetListener(graphActivity.this);
+                cdp.show(getSupportFragmentManager(), FRAG_TAG_DATE_PICKER);
+            }
+        });
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,7 +92,7 @@ public class graphActivity extends ActionBarActivity {
         y.setStartAtZero(false);
         y.setDrawGridLines(false);
         y.setAxisLineColor(Color.rgb(56,77,95));
-        
+
 
         mChart.getAxisRight().setEnabled(false);
         Legend l = mChart.getLegend();
@@ -156,5 +169,22 @@ public class graphActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void onResume() {
+        // Example of reattaching to the fragment
+        super.onResume();
+        CalendarDatePickerDialogFragment calendarDatePickerDialogFragment = (CalendarDatePickerDialogFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAG_TAG_DATE_PICKER);
+        if (calendarDatePickerDialogFragment != null) {
+            calendarDatePickerDialogFragment.setOnDateSetListener(this);
+        }
+    }
+
+    @Override
+    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+        mResultTextView.setText(getString(R.string.calendar_date_picker_result_values, year, monthOfYear, dayOfMonth));
+
     }
 }
