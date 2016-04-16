@@ -4,15 +4,23 @@ package kmutt.senior.pet.activity;
  * Created by book on 3/19/2016.
  */
 public class Getdata {
-    String Time;
-    String Name;
-    String Date;
-    Integer Pulse;
+    public String Time;
+    public String Name;
+    public String Date;
+    public String D;
+    public Integer Pulse;
+
+    public Getdata(){
+
+    }
     public void sName(String vName){
         this.Name = vName;
     }
     public void sDate(String vDate){
-        this.Name = vDate;
+        this.Date = vDate;
+    }
+    public void sD(String vD){
+        this.D = vD;
     }
     public void sTime(String vTime){
         this.Time = vTime;
@@ -29,6 +37,9 @@ public class Getdata {
     }
     public String gDate(){
         return Date;
+    }
+    public String gD(){
+        return D;
     }
     public String gTime(){
         return Time;

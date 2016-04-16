@@ -2,21 +2,14 @@ package kmutt.senior.pet.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-
-import android.support.design.widget.NavigationView;
-
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
 
 import kmutt.senior.pet.R;
 
@@ -35,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         dataActivity myDb = new dataActivity(this);
 
 
-     //   myDb.InsertData("bb","14/04/2016","10:00", 175);
+        myDb.InsertData("bb","16/04/2016","11:00", 145);
         initInstances();
 
 

@@ -67,7 +67,7 @@ public class dataActivity extends SQLiteOpenHelper {
             return -1;
         }
     }
-    public List<Getdata> SelectAllData() {
+    public List<Getdata> SelectAllData(String sss) {
         // TODO Auto-generated method stub
 
         try {
@@ -76,9 +76,10 @@ public class dataActivity extends SQLiteOpenHelper {
             SQLiteDatabase db;
             db = this.getReadableDatabase(); // Read Data
 
-            String strSQL = "SELECT  * FROM " + TABLE_MEMBER;
+            Log.d("sad",sss);
+            String strSQL = "SELECT  * FROM " + TABLE_MEMBER + " WHERE Date = '"+ sss+"'";
             Cursor cursor = db.rawQuery(strSQL, null);
-
+            Log.d("sad",strSQL);
             int count = cursor.getCount();
 
             /*String[] Time = new String[count];
