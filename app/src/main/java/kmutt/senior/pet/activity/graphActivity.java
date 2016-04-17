@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +33,7 @@ import kmutt.senior.pet.R;
 public class graphActivity extends BaseSampleActivity
         implements CalendarDatePickerDialogFragment.OnDateSetListener {
 
-
+    private String d;
     private LineChart mChart;
     private List<Getdata> MebmerList;
     private TextView mResultTextView;
@@ -49,11 +47,11 @@ public class graphActivity extends BaseSampleActivity
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         //         WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_graph);
-        Toolbar toolbar;
+
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy");
         String strDate = sdf.format(c.getTime());
-        Log.d("sad", "" + strDate);
+        //Log.d("sad", "" + strDate);
         myDb = new dataActivity(this);
         MebmerList = myDb.SelectAllData(strDate);
 
@@ -89,6 +87,7 @@ public class graphActivity extends BaseSampleActivity
 
 
             // add data
+            setgraph();
             setData(45, 100);
 
       /*  mChart.getLegend().setEnabled(true);
@@ -103,45 +102,54 @@ public class graphActivity extends BaseSampleActivity
         mChart.setMarkerView(mv);*/
         }
     }
+private void setgraph(){
+    mChart.setDescription("eiei");
 
+    // enable touch gestures
+    mChart.setTouchEnabled(true);
+
+    // enable scaling and dragging
+    mChart.setDragEnabled(true);
+    mChart.setScaleEnabled(true);
+
+    // if disabled, scaling can be done on x- and y-axis separately
+    mChart.setPinchZoom(true);
+
+    mChart.setDrawGridBackground(true);
+
+    XAxis x = mChart.getXAxis();
+    //x.setAvoidFirstLastClipping(true);
+    x.setTextColor(Color.rgb(37, 52, 65));
+    x.setPosition(XAxis.XAxisPosition.BOTTOM);
+    x.setDrawGridLines(false);
+    x.setAxisLineColor(Color.rgb(56, 77, 95));
+    //x.setDrawAxisLine(true);
+
+    YAxis y = mChart.getAxisLeft();
+
+    y.setTextColor(Color.rgb(37, 52, 65));
+    y.setStartAtZero(false);
+    y.setDrawGridLines(false);
+    y.setAxisLineColor(Color.rgb(56, 77, 95));
+    mChart.getAxisRight().setEnabled(false);
+    Legend l = mChart.getLegend();
+    l.setForm(Legend.LegendForm.LINE);
+    mChart.getLegend().setEnabled(true);
+
+    mChart.animateX(2500);
+
+    // dont forget to refresh the drawing
+
+    MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+
+    // set the marker to the chart
+    mChart.setMarkerView(mv);
+
+    mChart.notifyDataSetChanged();
+    mChart.invalidate();
+
+    }
     private void setData(int count, float range) {   mChart.setBackgroundColor(Color.TRANSPARENT);
-
-        // no description text
-        mChart.setDescription("eiei");
-
-        // enable touch gestures
-        mChart.setTouchEnabled(true);
-
-        // enable scaling and dragging
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-
-        // if disabled, scaling can be done on x- and y-axis separately
-        mChart.setPinchZoom(true);
-
-        mChart.setDrawGridBackground(true);
-
-
-        XAxis x = mChart.getXAxis();
-        //x.setAvoidFirstLastClipping(true);
-        x.setTextColor(Color.rgb(37, 52, 65));
-        x.setPosition(XAxis.XAxisPosition.BOTTOM);
-        x.setDrawGridLines(false);
-        x.setAxisLineColor(Color.rgb(56, 77, 95));
-        //x.setDrawAxisLine(true);
-
-        YAxis y = mChart.getAxisLeft();
-
-        y.setTextColor(Color.rgb(37, 52, 65));
-        y.setStartAtZero(false);
-        y.setDrawGridLines(false);
-        y.setAxisLineColor(Color.rgb(56, 77, 95));
-
-
-        mChart.getAxisRight().setEnabled(false);
-        Legend l = mChart.getLegend();
-        l.setForm(Legend.LegendForm.LINE);
-
 
         ArrayList<String> xVals = new ArrayList<String>();
         ArrayList<Entry> vals1 = new ArrayList<Entry>();
@@ -185,22 +193,11 @@ public class graphActivity extends BaseSampleActivity
 
         data.setValueTextSize(9f);
         //data.setDrawValues(true);
-
+        mChart.notifyDataSetChanged();
 
         // set data
         mChart.setData(data);
-        mChart.getLegend().setEnabled(true);
 
-        mChart.animateX(2500);
-
-        // dont forget to refresh the drawing
-
-        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-
-        // set the marker to the chart
-        mChart.setMarkerView(mv);
-        mChart.notifyDataSetChanged();
-        mChart.invalidate();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -219,22 +216,23 @@ public class graphActivity extends BaseSampleActivity
                 .findFragmentByTag(FRAG_TAG_DATE_PICKER);
         if (calendarDatePickerDialogFragment != null) {
             calendarDatePickerDialogFragment.setOnDateSetListener(this);
+
         }
+
+
     }
 
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
         mResultTextView.setText(getString(R.string.calendar_date_picker_result_values, year, monthOfYear, dayOfMonth));
-        String d = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1) + "/" + String.valueOf(year);
+        d = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1) + "/" + String.valueOf(year);
 
-        Log.d("sad", "" + d);
+        //Log.d("sad", "" + d);
 
+        myDb = new dataActivity(this);
         MebmerList = myDb.SelectAllData(d);
-
-
-        setData(45, 100);
-
-
+if(MebmerList != null){
+        setData(45, 100);}
     }
 
 

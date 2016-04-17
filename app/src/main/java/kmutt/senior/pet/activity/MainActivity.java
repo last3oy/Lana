@@ -27,8 +27,27 @@ public class MainActivity extends AppCompatActivity {
 
         dataActivity myDb = new dataActivity(this);
 
+        myDb.InsertData("bb","16/4/2016","10:00", 170);
+        myDb.InsertData("bb","16/4/2016","11:00", 145);
+        myDb.InsertData("bb","16/4/2016","12:00", 170);
+        myDb.InsertData("bb","16/4/2016","13:00", 185);
+        myDb.InsertData("bb","16/4/2016","14:00", 165);
+        myDb.InsertData("bb","16/4/2016","15:00", 195);
+        myDb.InsertData("bb","16/4/2016","16:00", 155);
+        myDb.InsertData("bb","16/4/2016","17:00", 160);
 
-        myDb.InsertData("bb","16/04/2016","11:00", 145);
+
+        myDb.InsertData("bb","17/4/2016","18:00", 170);
+        myDb.InsertData("bb","17/4/2016","12:00", 145);
+        myDb.InsertData("bb","17/4/2016","13:00", 185);
+        myDb.InsertData("bb","17/4/2016","14:00", 165);
+        myDb.InsertData("bb","17/4/2016","15:00", 195);
+        myDb.InsertData("bb","17/4/2016","16:00", 155);
+        myDb.InsertData("bb","17/4/2016","17:00", 160);
+        myDb.InsertData("bb","17/4/2016","18:00", 170);
+
+
+
         initInstances();
 
 

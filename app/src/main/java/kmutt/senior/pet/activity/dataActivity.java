@@ -13,7 +13,6 @@ import java.util.List;
 public class dataActivity extends SQLiteOpenHelper {
 
 
-
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "mydataaa";
     private static final String TABLE_MEMBER = "pulaa";
@@ -74,13 +73,18 @@ public class dataActivity extends SQLiteOpenHelper {
             List<Getdata> MemberList = new ArrayList<Getdata>();
 
             SQLiteDatabase db;
-            db = this.getReadableDatabase(); // Read Data
+            db = this.getWritableDatabase(); // Read Data
 
-            Log.d("sad",sss);
+            Cursor cursor;
+            //Log.d("sad",sss);
             String strSQL = "SELECT  * FROM " + TABLE_MEMBER + " WHERE Date = '"+ sss+"'";
-            Cursor cursor = db.rawQuery(strSQL, null);
-            Log.d("sad",strSQL);
-            int count = cursor.getCount();
+
+
+            cursor = db.rawQuery(strSQL, null);
+
+            //Log.d("sad",""+cursor.moveToFirst());
+            //Log.d("sad",strSQL);
+           // int count = cursor.getCount();
 
             /*String[] Time = new String[count];
             int[] Pulse = new int[count];
@@ -92,6 +96,9 @@ public class dataActivity extends SQLiteOpenHelper {
             }*/
             if(cursor != null)
             {
+                //Log.d("sad","sad");
+
+                //Log.d("sad",""+cursor.moveToFirst());
                 if (cursor.moveToFirst()) {
                     do {
                         Getdata cMember = new Getdata();
@@ -99,18 +106,20 @@ public class dataActivity extends SQLiteOpenHelper {
                         cMember.sDate(cursor.getString(1));
                         cMember.sTime(cursor.getString(2));
                         cMember.sPulse(cursor.getInt(3));
-
+                        Log.d("sad",""+MemberList);
                         MemberList.add(cMember);
                     } while (cursor.moveToNext());
                 }
             }
             cursor.close();
+
+            //Log.d("sad",""+cursor.isFirst());
             db.close();
             return MemberList;
         }
          catch (Exception e) {
-            return null;
-        }
+                return null;
+            }
 
     }
 }
