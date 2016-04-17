@@ -36,7 +36,7 @@ public class graphActivity extends BaseSampleActivity
     private String d;
     private LineChart mChart;
     private List<Getdata> MebmerList;
-    private TextView mResultTextView;
+    private TextView mResultTextView, TextView;
     dataActivity myDb;
     Getdata cMember;
     private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
@@ -55,7 +55,9 @@ public class graphActivity extends BaseSampleActivity
         myDb = new dataActivity(this);
         MebmerList = myDb.SelectAllData(strDate);
 
+        TextView = (TextView) findViewById(R.id.textView);
         mResultTextView = (TextView) findViewById(R.id.text);
+        mResultTextView.setText("Date :" + strDate);
         final Button button = (Button) findViewById(R.id.btn);
         mChart = (LineChart) findViewById(R.id.chart1);
 
@@ -85,7 +87,6 @@ public class graphActivity extends BaseSampleActivity
         } else {
 
 
-
             // add data
             setgraph();
             setData(45, 100);
@@ -102,71 +103,77 @@ public class graphActivity extends BaseSampleActivity
         mChart.setMarkerView(mv);*/
         }
     }
-private void setgraph(){
-    mChart.setDescription("eiei");
 
-    // enable touch gestures
-    mChart.setTouchEnabled(true);
+    private void setgraph() {
+        mChart.setDescription("");
 
-    // enable scaling and dragging
-    mChart.setDragEnabled(true);
-    mChart.setScaleEnabled(true);
+        // enable touch gestures
+        mChart.setTouchEnabled(true);
 
-    // if disabled, scaling can be done on x- and y-axis separately
-    mChart.setPinchZoom(true);
+        // enable scaling and dragging
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
 
-    mChart.setDrawGridBackground(true);
+        // if disabled, scaling can be done on x- and y-axis separately
+        mChart.setPinchZoom(true);
 
-    XAxis x = mChart.getXAxis();
-    //x.setAvoidFirstLastClipping(true);
-    x.setTextColor(Color.rgb(37, 52, 65));
-    x.setPosition(XAxis.XAxisPosition.BOTTOM);
-    x.setDrawGridLines(false);
-    x.setAxisLineColor(Color.rgb(56, 77, 95));
-    //x.setDrawAxisLine(true);
+        mChart.setDrawGridBackground(true);
 
-    YAxis y = mChart.getAxisLeft();
+        XAxis x = mChart.getXAxis();
+        //x.setAvoidFirstLastClipping(true);
+        x.setTextColor(Color.rgb(37, 52, 65));
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        x.setDrawGridLines(false);
+        x.setAxisLineColor(Color.rgb(56, 77, 95));
+        //x.setDrawAxisLine(true);
 
-    y.setTextColor(Color.rgb(37, 52, 65));
-    y.setStartAtZero(false);
-    y.setDrawGridLines(false);
-    y.setAxisLineColor(Color.rgb(56, 77, 95));
-    mChart.getAxisRight().setEnabled(false);
-    Legend l = mChart.getLegend();
-    l.setForm(Legend.LegendForm.LINE);
-    mChart.getLegend().setEnabled(true);
+        YAxis y = mChart.getAxisLeft();
 
-    mChart.animateX(2500);
+        y.setTextColor(Color.rgb(37, 52, 65));
+        y.setStartAtZero(false);
+        y.setDrawGridLines(false);
+        y.setAxisLineColor(Color.rgb(56, 77, 95));
+        mChart.getAxisRight().setEnabled(false);
+        Legend l = mChart.getLegend();
+        l.setForm(Legend.LegendForm.LINE);
+        mChart.getLegend().setEnabled(true);
 
-    // dont forget to refresh the drawing
+        mChart.animateX(2500);
 
-    MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+        // dont forget to refresh the drawing
 
-    // set the marker to the chart
-    mChart.setMarkerView(mv);
+        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
 
-    mChart.notifyDataSetChanged();
-    mChart.invalidate();
+        // set the marker to the chart
+        mChart.setMarkerView(mv);
+
+        mChart.notifyDataSetChanged();
+        mChart.invalidate();
 
     }
-    private void setData(int count, float range) {   mChart.setBackgroundColor(Color.TRANSPARENT);
+
+    private void setData(int count, float range) {
+        mChart.setBackgroundColor(Color.TRANSPARENT);
 
         ArrayList<String> xVals = new ArrayList<String>();
         ArrayList<Entry> vals1 = new ArrayList<Entry>();
         int i = 0;
+        int sum = 0;
+        float avg = 0;
         for (Getdata getdata : MebmerList) {
             // Log.wtf("LookX",""+getdata.gName());
             // Log.wtf("LookX",""+getdata.gDate());
             // Log.wtf("LookX",""+getdata.gTime());
             //   Log.wtf("LookY",""+getdata.gPulse());
 
-
+            sum += getdata.gPulse();
             xVals.add(getdata.gTime());
             vals1.add(new Entry(getdata.gPulse(), i));
             i++;
 
         }
-
+        avg = sum / i;
+        TextView.setText("Avg Pulse :" + avg + " BPM");
         // create a dataset and give it a type
         LineDataSet set1 = new LineDataSet(vals1, "");
         set1.setColor(Color.rgb(56, 77, 95));
@@ -224,15 +231,19 @@ private void setgraph(){
 
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-        mResultTextView.setText(getString(R.string.calendar_date_picker_result_values, year, monthOfYear, dayOfMonth));
+        mResultTextView.setText(getString(R.string.calendar_date_picker_result_values, year, monthOfYear + 1, dayOfMonth));
         d = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1) + "/" + String.valueOf(year);
 
         //Log.d("sad", "" + d);
 
         myDb = new dataActivity(this);
         MebmerList = myDb.SelectAllData(d);
-if(MebmerList != null){
-        setData(45, 100);}
+        if (MebmerList != null) {
+            setData(45, 100);
+            mChart.invalidate();
+        }
+
+
     }
 
 

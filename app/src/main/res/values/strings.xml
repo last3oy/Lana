@@ -9,7 +9,7 @@
     <string name="edt_hint_age">Age (year)</string>
     <string name="edt_hint_size">Size</string>
     <string name="edt_hint_breed">Breed of Dog</string>
-    <string name="calendar_date_picker_result_values">Year: %1$s\nMonth: %2$s\nDay: %3$s</string>
+    <string name="calendar_date_picker_result_values">Date : %3$s/%2$s/%1$s</string>
 
 
     <string-array name="breed">
