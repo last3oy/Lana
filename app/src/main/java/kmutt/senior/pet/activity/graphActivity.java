@@ -170,9 +170,22 @@ public class graphActivity extends BaseSampleActivity
             xVals.add(getdata.gTime());
             vals1.add(new Entry(getdata.gPulse(), i));
             i++;
-
         }
-        avg = sum / i;
+        if (sum != 0) {
+            avg = sum / i;
+
+        } else {
+            AlertDialog alertDialog = new AlertDialog.Builder(graphActivity.this).create();
+            alertDialog.setTitle("Alert");
+            alertDialog.setMessage("No data On date Your select");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
         TextView.setText("Avg Pulse :" + avg + " BPM");
         // create a dataset and give it a type
         LineDataSet set1 = new LineDataSet(vals1, "");
@@ -241,6 +254,7 @@ public class graphActivity extends BaseSampleActivity
         if (MebmerList != null) {
             setData(45, 100);
             mChart.invalidate();
+        } else {
         }
 
 
