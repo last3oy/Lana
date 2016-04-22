@@ -31,22 +31,18 @@ public class SelectProfileActivity extends AppCompatActivity {
         initInstances();
 
 
-
-
-
-
-
     }
 
     private void initInstances() {
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Select your dogs");
 
-        db = new DatabaseHelper(getApplicationContext());
+        db = new DatabaseHelper(this);
 
         lvProfile = (ListView) findViewById(R.id.lvProfile);
-        allProfile = db.getAllProfile();
+        allProfile = db.getListSelectProfile();
 
         mAdapter = new DogProfileAdapter(this,allProfile);
 
@@ -57,8 +53,10 @@ public class SelectProfileActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                intent.putExtra("Profile", mAdapter.getProfile(position));
-                Log.i("text", mAdapter.getProfile(position).getDogName());
+                Log.i("SELCETPROFILE", "" + mAdapter.getIdProfile(position));
+                Bundle bundle = new Bundle();
+                bundle.putInt("idProfile",mAdapter.getIdProfile(position));
+                intent.putExtra("idBundle", bundle);
                 startActivity(intent);
 
             }

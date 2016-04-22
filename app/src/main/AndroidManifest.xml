@@ -16,14 +16,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/ActivityNoActionBar">
-
-
-        </activity>
-
+            android:theme="@style/ActivityNoActionBar"></activity>
         <activity
             android:name=".activity.WelcomeActivity"
             android:theme="@style/ActivityNoActionBar">
@@ -33,21 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.InputPetProfileActivity">
-
-        </activity>
-
+        <activity
+            android:name=".activity.InputPetProfileActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".activity.BluetoothActivity" />
+        <activity android:name=".activity.SelectProfileActivity"></activity>
+        <activity android:name=".activity.ProfileActivity"></activity>
+        <activity android:name=".activity.SyncDataActivity"></activity>
 
-
-        <activity android:name=".activity.SelectProfileActivity">
-
-        </activity>
-
-        <activity android:name=".activity.ProfileActivity">
-
-        </activity>
+        <service android:name=".service.BluetoothLeService" android:enabled="true"/>
     </application>
+
 
 </manifest>

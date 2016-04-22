@@ -14,7 +14,7 @@ public class MainApplication extends Application {
         super.onCreate();
 
         //Initialize thing(s) here
-        Contextor.getInstance().init(getApplicationContext());
+
     }
 
     @Override

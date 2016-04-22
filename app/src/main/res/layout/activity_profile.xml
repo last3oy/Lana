@@ -1,60 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.1"
-        android:src="@android:color/black" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/pictureProfile"
-            android:layout_width="144dp"
-            android:layout_height="144dp"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:src="@drawable/nav_header_bg" />
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="Name: test"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/tvBreed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="Breed: test"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/tvSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="Size: test"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/tvAge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="Age: test year"
-            android:textSize="24sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-    </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/pictureProfile"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:tintMode="add"
+                android:src="@drawable/nav_header_bg" />
 
-</RelativeLayout>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_name"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_pets_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_gender"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_wc_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerBreed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_breed"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_info_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/spinnerSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_size"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_toys_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edtAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:hint="@string/edt_hint_age"
+                android:inputType="number"
+                android:singleLine="true"
+                app:met_floatingLabel="normal"
+                app:met_iconLeft="@drawable/ic_cake_black_24dp"
+                app:met_iconPadding="0dp" />
+
+            <Button
+                android:id="@+id/btnSummit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/btn_add_profile" />
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>

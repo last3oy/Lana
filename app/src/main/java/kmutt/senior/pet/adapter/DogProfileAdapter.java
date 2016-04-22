@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
 import kmutt.senior.pet.bus.Contextor;
 import kmutt.senior.pet.model.DogProfile;
+import kmutt.senior.pet.service.DbBitmapUtility;
 
 /**
  * Created by last3oy on 31/03/2016.
@@ -24,13 +26,13 @@ public class DogProfileAdapter extends BaseAdapter {
     public DogProfileAdapter(Context context,ArrayList<DogProfile> Profile) {
         mInflator = LayoutInflater.from(context);
         this.mProfile = Profile;
-        for (DogProfile todo : this.mProfile) {
-            Log.d("ToDo", todo.getDogName());
+        for (DogProfile mDogProfile : this.mProfile) {
+            Log.d("ToDo", mDogProfile.getDogName());
         }
     }
 
-    public DogProfile getProfile(int position){
-        return mProfile.get(position);
+    public int getIdProfile(int position){
+        return mProfile.get(position).getDogId();
     }
     @Override
     public int getCount() {
@@ -54,6 +56,7 @@ public class DogProfileAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflator.inflate(R.layout.listitem_profile,null);
             viewHolder = new ViewHolder();
+            viewHolder.profilePicture = (CircleImageView) convertView.findViewById(R.id.circle_image);
             viewHolder.profileName = (TextView) convertView.findViewById(R.id.profileName);
             viewHolder.profileBreed = (TextView) convertView.findViewById(R.id.profileBreed);
             convertView.setTag(viewHolder);
@@ -62,6 +65,7 @@ public class DogProfileAdapter extends BaseAdapter {
         }
 
         DogProfile Profile = mProfile.get(position);
+        viewHolder.profilePicture.setImageBitmap(DbBitmapUtility.getImage(Profile.getPicture()));
         viewHolder.profileName.setText("Name: "+Profile.getDogName());
         viewHolder.profileBreed.setText("Breed: "+Profile.getBreed());
 
@@ -69,6 +73,7 @@ public class DogProfileAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
+        CircleImageView profilePicture;
         TextView profileName;
         TextView profileBreed;
     }
