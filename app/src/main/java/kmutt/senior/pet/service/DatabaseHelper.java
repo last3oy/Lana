@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -191,8 +190,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<DogProfileDTO> getbpm(int id, String datee) throws ParseException {
         ArrayList<DogProfileDTO> Profiles = new ArrayList<DogProfileDTO>();
-        String selectQuery = "SELECT * FROM " + TABLE_BPM + " WHERE "+KEY_ID_DOG + " = " + id +" and "+KEY_DATE+ " LIKE '%"+datee+"%'";
-        String startTime,n = null;
+        String selectQuery = "SELECT * FROM " + TABLE_BPM + " WHERE " + KEY_ID_DOG + " = " + id + " and " + KEY_DATE + " LIKE '%" + datee + "%'";
+        String startTime, n = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCursor = db.rawQuery(selectQuery, null);
 
@@ -204,8 +203,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String date = tk.nextToken();
                 String time = tk.nextToken();
 
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-                time = sdf.format(time);
                 mDogProfile.setdate(time);
                 mDogProfile.setBpm(mCursor.getInt(mCursor.getColumnIndex(KEY_BPM)));
                 Profiles.add(mDogProfile);

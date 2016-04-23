@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -22,16 +23,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
+import com.codetroopers.betterpickers.expirationpicker.ExpirationPickerBuilder;
+import com.codetroopers.betterpickers.expirationpicker.ExpirationPickerDialogFragment;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.FillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,12 +57,14 @@ import kmutt.senior.pet.service.DatabaseHelper;
 import kmutt.senior.pet.view.MyMarkerView;
 
 
-public class MainActivity extends AppCompatActivity implements CalendarDatePickerDialogFragment.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements CalendarDatePickerDialogFragment.OnDateSetListener ,ExpirationPickerDialogFragment.ExpirationPickerDialogHandler {
     private int fragSelectProfile;
-    private String strDate,d;
-    private LineChart mChart,mChart1,mChart2;
+    private String strDate, d,strDate1;
+    private BarChart mChart;
+    private LineChart mChart1;
+    private LineChart mChart2;
     private final int newSelectCode = 14;
-    TextView mResultTextView, TextView;
+    TextView mResultTextView, TextView,TextView2;
     private List<DogProfileDTO> MebmerList;
     DatabaseHelper db;
     Toolbar toolbar;
@@ -69,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
     int flag = 0;
     AlertDialog alertDialog;
     private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +96,12 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         DB = new DatabaseHelper(this);
 
 
-        mChart = (LineChart) findViewById(R.id.chart1);
+        mChart = (BarChart) findViewById(R.id.chart1);
         mChart1 = (LineChart) findViewById(R.id.chart2);
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initInstances() {
@@ -206,6 +227,9 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
     @Override
     protected void onStart() {
         super.onStart();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
         allNameProfile = db.getNameProfile();
         if (!allNameProfile.isEmpty() && allNameProfile.size() > 1) {
             ibProfile.setVisibility(View.VISIBLE);
@@ -227,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         //graph
         Button button = (Button) findViewById(R.id.btnSelectDate);
         try {
-            MebmerList = DB.getbpm(profile.getId(),strDate);
+            MebmerList = DB.getbpm(profile.getId(), strDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -263,13 +287,51 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        Button button1 = (Button) findViewById(R.id.btnSelectmonth);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExpirationPickerBuilder epb = new ExpirationPickerBuilder()
+                        .setFragmentManager(getSupportFragmentManager())
+                        .setStyleResId(R.style.BetterPickersDialogFragment);
+                epb.show();
+            }
+        });
+
+        Calendar cc = Calendar.getInstance();
+        SimpleDateFormat sdsf = new SimpleDateFormat("yyyy-MM-");
+        strDate1 = sdsf.format(c.getTime());
+        Log.d("sad", "" + strDate1);
+        DB = new DatabaseHelper(this);
+        try {
+            MebmerList = DB.getbpm(profile.getId(), strDate1);
+            graphmonth();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://kmutt.senior.pet.activity/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
         allNameProfile.clear();
         Log.i("MainActivity", "Stop");
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.disconnect();
     }
 
     private void createListChangeProfile() {
@@ -326,10 +388,11 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
 
         // enable scaling and dragging
         mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
+        mChart.setScaleEnabled(false);
 
         // if disabled, scaling can be done on x- and y-axis separately
-        mChart.setPinchZoom(true);
+        mChart.fitScreen();
+        mChart.setPinchZoom(false);
 
         mChart.setDrawGridBackground(true);
 
@@ -345,7 +408,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
 
         y.setTextColor(Color.rgb(37, 52, 65));
         y.setStartAtZero(false);
-        y.setDrawGridLines(false);
+        y.setDrawGridLines(true);
         y.setAxisLineColor(Color.rgb(56, 77, 95));
         mChart.getAxisRight().setEnabled(false);
         Legend l = mChart.getLegend();
@@ -370,7 +433,8 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         mChart.setBackgroundColor(Color.TRANSPARENT);
 
         ArrayList<String> xVals = new ArrayList<String>();
-        ArrayList<Entry> vals1 = new ArrayList<Entry>();
+        ArrayList<BarEntry> vals1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> vals2 = new ArrayList<BarEntry>();
         int i = 0;
         int sum = 0;
         float avg = 0;
@@ -382,7 +446,11 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
 
             sum += getdata.getBpm();
             xVals.add(getdata.getDatetime());
-            vals1.add(new Entry(getdata.getBpm(), i));
+            if (getdata.getBpm() >= 180 || getdata.getBpm() <= 70) {
+                vals2.add(new BarEntry(getdata.getBpm(), i));
+            } else {
+                vals1.add(new BarEntry(getdata.getBpm(), i));
+            }
             i++;
         }
         if (sum != 0) {
@@ -403,28 +471,30 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         TextView = (TextView) findViewById(R.id.textView);
         TextView.setText("Avg Pulse :" + avg + " BPM");
         // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(vals1, "");
+        BarDataSet set1 = new BarDataSet(vals1, "");
         set1.setColor(Color.rgb(56, 77, 95));
-        set1.setLineWidth(1f);
-        set1.setCircleColor(Color.rgb(37, 52, 65));
-        set1.setCircleRadius(5f);
-        set1.setFillColor(Color.rgb(37, 52, 65));
-        set1.setDrawCubic(true);
+        //set1.setLineWidth(1f);
+        //set1.setCircleColor(Color.rgb(37, 52, 65));
+        //set1.setCircleRadius(5f);
+        //set1.setFillColor(Color.rgb(37, 52, 65));
+        //set1.setDrawCubic(true);
+        set1.setBarSpacePercent(90f);
         set1.setDrawValues(false);
         set1.setValueTextSize(10f);
         set1.setValueTextColor(Color.rgb(37, 52, 65));
 
+        BarDataSet set2 = new BarDataSet(vals2, "");
+        set2.setColor(Color.RED);
+        set2.setBarSpacePercent(90f);
+        set2.setDrawValues(false);
+        //set1.setDrawHorizontalHighlightIndicator(false);
 
-        set1.setDrawHorizontalHighlightIndicator(false);
-        set1.setFillFormatter(new FillFormatter() {
-            @Override
-            public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
-                return -10;
-            }
-        });
 
         // create a data object with the datasets
-        LineData data = new LineData(xVals, set1);
+        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+        dataSets.add(set1);
+        dataSets.add(set2);
+        BarData data = new BarData(xVals, dataSets);
 
         data.setValueTextSize(9f);
         //data.setDrawValues(true);
@@ -457,7 +527,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         Log.d("sad", n);
         DB = new DatabaseHelper(this);
         try {
-            MebmerList = DB.getbpm(profile.getId(),n);
+            MebmerList = DB.getbpm(profile.getId(), n);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -472,24 +542,27 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
 
     private void graphmonth() throws ParseException {
 
-        mChart1.setDescription("");
+        // set data
 
+
+        mChart1.setDescription("");
+        mChart1.fitScreen();
         // enable touch gestures
         mChart1.setTouchEnabled(true);
 
         // enable scaling and dragging
         mChart1.setDragEnabled(true);
-        mChart1.setScaleEnabled(true);
+        mChart1.setScaleEnabled(false);
 
         // if disabled, scaling can be done on x- and y-axis separately
-        mChart1.setPinchZoom(true);
-
+        mChart1.fitScreen();
+        mChart1.setPinchZoom(false);
         mChart1.setDrawGridBackground(true);
 
         XAxis x = mChart1.getXAxis();
         //x.setAvoidFirstLastClipping(true);
         x.setTextColor(Color.rgb(37, 52, 65));
-        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //  x.setPosition(XAxis.XAxisPosition.BOTTOM);
         x.setDrawGridLines(false);
         x.setAxisLineColor(Color.rgb(56, 77, 95));
         //x.setDrawAxisLine(true);
@@ -504,7 +577,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         Legend l = mChart1.getLegend();
         l.setForm(Legend.LegendForm.LINE);
         mChart1.getLegend().setEnabled(true);
-
+        mChart1.getXAxis().setDrawLabels(false);
         mChart1.animateX(2500);
 
         // dont forget to refresh the drawing
@@ -560,13 +633,19 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         data.setValueTextSize(9f);
         //data.setDrawValues(true);
         mChart1.notifyDataSetChanged();
+        mChart1.setData(data);
+    }
 
-        // set data
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("-MM-");
-        strDate = sdf.format(c.getTime());
-        Log.d("sad",""+strDate);
-        DB = new DatabaseHelper(this);
-        MebmerList = DB.getbpm(profile.getId(),strDate);
+    public void onDialogExpirationSet(int reference, int year, int monthOfYear) {
+        TextView2 = (TextView) findViewById(R.id.textView2);
+        TextView2.setText(getString(R.string.expiration_picker_result_value, String.format("%02d", monthOfYear), year));
+       String dd = year+"-"+String.format("%02d", monthOfYear);
+        try {
+            MebmerList = DB.getbpm(profile.getId(), dd);
+            graphmonth();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
