@@ -18,6 +18,7 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -78,6 +79,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
         mListView = (ListView) findViewById(R.id.lvBt);
 
         mAdapter = new DeviceListAdapter(this);
+        //mListView.setAdapter(mAdapter);
+
 
         btnScan.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -86,6 +89,23 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
         } else {
             initcallback();
         }
+        AdapterView.OnItemClickListener itemDevicesClicked = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final BluetoothDevice device = mAdapter.getDevice(position);
+                if (device != null) {
+                    final Intent intent = new Intent(getApplicationContext(), SyncDataActivity.class);
+                    intent.putExtra("DEVICE_NAME", device.getName());
+                    intent.putExtra("DEVICE_ADDRESS", device.getAddress());
+                    startActivity(intent);
+
+
+                }
+
+
+            }
+        };
+        mListView.setOnItemClickListener(itemDevicesClicked);
     }
 
 
@@ -163,6 +183,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
         switch (id) {
             case R.id.btnCancel:
                 scanLeDevice(false);
+                final Intent intent = new Intent(getApplicationContext(), SyncDataActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btnScan:
                 scanLeDevice(true);
@@ -214,6 +236,5 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
             mListView.setAdapter(mAdapter);
         }
     }
-
 
 }

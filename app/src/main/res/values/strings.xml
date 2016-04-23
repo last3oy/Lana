@@ -9,13 +9,16 @@
     <string name="edt_hint_age">Age (year)</string>
     <string name="edt_hint_size">Size</string>
     <string name="edt_hint_breed">Breed of Dog</string>
-    <string name="calendar_date_picker_result_values">Date : %3$s/%2$s/%1$s</string>
+    <string name="edt_hint_gender">Gender</string>
+    <string name="btn_add_profile">Add</string>
+
+    <string name="action_settings">Settings</string>
 
 
     <string-array name="breed">
         <item>Chihuahua</item>
         <item>Pomeranian</item>
-        <item>Shih-Tzu</item>
+        <item>Shi-Tzu</item>
         <item>Beagle</item>
         <item>Pug</item>
         <item>Bulldog</item>
@@ -30,22 +33,20 @@
         <item>Other</item>
     </string-array>
 
+    <string name="size_small">Small (&lt;13 Kg)</string>
+    <string name="size_medium">Medium-Large (13-40 Kg)</string>
+    <string name="size_large">X-Large (&gt;40 Kg)</string>
     <string-array name="size">
-        <item>Small (&lt;13 Kg)</item>
-        <item>Medium-Large (13-40 Kg)</item>
-        <item>X-Large (&gt;40 Kg)</item>
+        <item>@string/size_small</item>
+        <item>@string/size_medium</item>
+        <item>@string/size_large</item>
     </string-array>
 
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="Graph">Hello blank fragment</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
-    >>>>>>> origin/pai
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string-array name="gender">
+        <item>@string/gender_male</item>
+        <item>@string/gender_female</item>
+    </string-array>
+    <string name="calendar_date_picker_result_values">Date : %3$s/%2$s/%1$s</string>
 </resources>

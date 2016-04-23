@@ -1,4 +1,4 @@
-package kmutt.senior.pet.activity;
+package kmutt.senior.pet.view;
 
 import android.content.Context;
 import android.widget.TextView;
