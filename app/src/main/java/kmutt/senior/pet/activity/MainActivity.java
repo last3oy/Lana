@@ -94,11 +94,8 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         setContentView(R.layout.activity_main);
         initInstances();
         DB = new DatabaseHelper(this);
-
-
         mChart = (BarChart) findViewById(R.id.chart1);
         mChart1 = (LineChart) findViewById(R.id.chart2);
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -638,8 +635,8 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
 
     public void onDialogExpirationSet(int reference, int year, int monthOfYear) {
         TextView2 = (TextView) findViewById(R.id.textView2);
-        TextView2.setText(getString(R.string.expiration_picker_result_value, String.format("%02d", monthOfYear), year));
-       String dd = year+"-"+String.format("%02d", monthOfYear);
+        TextView2.setText("Month :"+getString(R.string.expiration_picker_result_value, String.format("%02d", monthOfYear), year));
+        String dd = year+"-"+String.format("%02d", monthOfYear);
         try {
             MebmerList = DB.getbpm(profile.getId(), dd);
             graphmonth();

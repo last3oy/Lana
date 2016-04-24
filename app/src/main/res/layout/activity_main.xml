@@ -8,70 +8,113 @@
     tools:context=".activity.MainActivity">
 
 
-        <android.support.design.widget.CoordinatorLayout
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <android.support.design.widget.AppBarLayout
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        </android.support.design.widget.AppBarLayout>
 
 
-            </android.support.design.widget.AppBarLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:orientation="vertical">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView1"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView"
-                        />
+                    android:orientation="vertical"
+                    android:padding="15dp"
 
-                    <Button
-                        android:id="@+id/btnSelectDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Choose Date"/>
+                    >
 
-                  <com.github.mikephil.charting.charts.BarChart
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#f7bb73">
 
-                      android:id="@+id/chart1"
-                      android:layout_width="match_parent"
-                      android:layout_height="200dp">
+                        <Button
+                            android:id="@+id/btnSelectDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|center_vertical"
+                            android:background="@android:color/transparent"
+                            android:text="Date ▼"
+                            android:textColor="#384d5f" />
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|bottom"
+                            android:gravity="right|center_vertical"
+                            android:paddingRight="10dp"
+                            android:textColor="#ffffff" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:gravity="right|bottom"
+                            android:paddingRight="10dp"
+                            android:textColor="#ffffff" />
+                    </FrameLayout>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"></com.github.mikephil.charting.charts.BarChart>
 
 
+                </LinearLayout>
 
-                  </com.github.mikephil.charting.charts.BarChart>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/textView2" />
-                    <Button
-                        android:id="@+id/btnSelectmonth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Choose Month"/>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#f7bb73">
+
+                        <Button
+                            android:id="@+id/btnSelectmonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:text="Month ▼"
+                            android:textColor="#384d5f" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|bottom"
+                            android:paddingRight="10dp"
+                            android:textColor="#ffffff" />
+                    </FrameLayout>
+
 
                     <com.github.mikephil.charting.charts.LineChart
 
@@ -80,14 +123,14 @@
                         android:layout_height="200dp">
 
 
-
                     </com.github.mikephil.charting.charts.LineChart>
                 </LinearLayout>
 
-            </ScrollView>
+            </LinearLayout>
 
-        </android.support.design.widget.CoordinatorLayout>
+        </ScrollView>
 
+    </android.support.design.widget.CoordinatorLayout>
 
 
     <android.support.design.widget.NavigationView
