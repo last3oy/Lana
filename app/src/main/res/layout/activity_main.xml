@@ -8,52 +8,124 @@
     tools:context=".activity.MainActivity">
 
 
-        <android.support.design.widget.CoordinatorLayout
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <android.support.design.widget.AppBarLayout
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        </android.support.design.widget.AppBarLayout>
 
 
-            </android.support.design.widget.AppBarLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+
+                    android:background="#f7bb73">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvBpm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="value"
+                            android:textColor="#ffffff" />
+
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="date"
+                            android:textColor="#ffffff"
+                            android:layout_gravity="right"/>
+                    </LinearLayout>
+
 
                     <Button
                         android:id="@+id/btnSelectDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choose Date"/>
+                        android:background="@android:color/transparent"
+                        android:text="Date ▼"
+                        android:textColor="#384d5f" />
+                </FrameLayout>
 
-                  <com.github.mikephil.charting.charts.LineChart
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content">
 
-                  </com.github.mikephil.charting.charts.LineChart>
-                </LinearLayout>
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/dailyBarChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
 
-            </ScrollView>
+                <FrameLayout
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#f7bb73">
 
-        </android.support.design.widget.CoordinatorLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="16dp"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/tvMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="month"
+                            android:textColor="#ffffff" />
+
+
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/btnSelectMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:text="Month ▼"
+                        android:textColor="#384d5f" />
+                </FrameLayout>
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/monthlyLineChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 
     <android.support.design.widget.NavigationView

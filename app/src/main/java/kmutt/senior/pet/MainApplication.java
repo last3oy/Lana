@@ -2,7 +2,6 @@ package kmutt.senior.pet;
 
 import android.app.Application;
 
-import kmutt.senior.pet.bus.Contextor;
 
 /**
  * Created by last3oy on 31/03/2016.

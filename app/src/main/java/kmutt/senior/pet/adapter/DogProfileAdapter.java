@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
-import kmutt.senior.pet.bus.Contextor;
 import kmutt.senior.pet.model.DogProfile;
 import kmutt.senior.pet.service.DbBitmapUtility;
 

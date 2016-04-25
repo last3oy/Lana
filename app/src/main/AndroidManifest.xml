@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -18,7 +19,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/ActivityNoActionBar"></activity>
+            android:theme="@style/ActivityNoActionBar" />
         <activity
             android:name=".activity.WelcomeActivity"
             android:theme="@style/ActivityNoActionBar">
@@ -30,14 +31,19 @@
         </activity>
         <activity
             android:name=".activity.InputPetProfileActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.BluetoothActivity" />
-        <activity android:name=".activity.SelectProfileActivity"></activity>
-        <activity android:name=".activity.ProfileActivity"></activity>
-        <activity android:name=".activity.SyncDataActivity"></activity>
+        <activity android:name=".activity.SelectProfileActivity" />
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.SyncDataActivity" />
 
-        <service android:name=".service.BluetoothLeService" android:enabled="true"/>
+        <service
+            android:name=".service.BluetoothLeService"
+            android:enabled="true" />
+
+        <activity android:name=".activity.AboutActivity" />
+
+        <activity android:name=".activity.HealthdataActivity"></activity>
     </application>
-
 
 </manifest>

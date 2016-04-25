@@ -11,7 +11,10 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
+import kmutt.senior.pet.model.BpmValue;
+import kmutt.senior.pet.model.DogNameId;
 import kmutt.senior.pet.model.DogProfile;
 import kmutt.senior.pet.model.DogProfileDTO;
 
@@ -82,9 +85,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //BPM Table Create
     private static final String CREATE_TABLE_BPM = "CREATE TABLE "
             + TABLE_BPM + "(" +
-            KEY_DATE + " DATETIME PRIMARY KEY," +
+            KEY_DATE + " DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'LOCALTIME'))," +
             KEY_ID_DOG + " INTEGER," +
-            KEY_BPM + " INTEGER" + ")";
+            KEY_BPM + " INTEGER," +
+            "PRIMARY KEY (" + KEY_DATE + "," + KEY_ID_DOG + "))";
 
 
     public DatabaseHelper(Context context) {
@@ -96,7 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_PROFILE);
         db.execSQL(CREATE_TABLE_GENDER);
         db.execSQL(CREATE_TABLE_SIZE);
-        //db.execSQL(CREATE_TABLE_BPM);
+        db.execSQL(CREATE_TABLE_BPM);
 
         //Insert default values
         db.execSQL("INSERT INTO " +
@@ -106,8 +110,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " +
                 TABLE_SIZE + "(" +
                 KEY_SIZE + ") VALUES(" +
-                "'Small'),('Medium'),('Large')");
+                "'Small (<13 Kg)'),('Medium-Large (13-40 Kg)'),('X-Large (>40 Kg)')");
 
+        db.execSQL("INSERT INTO " +
+                TABLE_BPM + "(" +
+                KEY_ID_DOG + "," +
+                KEY_BPM + ") VALUES" +
+                "(1,124)");
 
     }
 
@@ -121,7 +130,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //insert----
+    /**
+     * Insert
+     */
     public long createProfile(DogProfile dogProfile) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -140,43 +151,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public long createBpmvalue(int dogId, int value) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    //select----
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_DOG, dogId);
+        values.put(KEY_BPM, value);
 
-  /*  public ArrayList<DogProfile> getProfile(int id) {
-        ArrayList<DogProfile> Profiles = new ArrayList<DogProfile>();
-        String selectQuery = "SELECT  * FROM " + TABLE_PROFILE + " WHERE = " + id;
+
+        long profile_id = db.insert(TABLE_BPM, null, values);
+        db.close();
+        return profile_id;
+    }
+
+
+    /**
+     * Select
+     */
+
+
+    public ArrayList<BpmValue> getbpm(int id, String date) {
+        ArrayList<BpmValue> values = new ArrayList<BpmValue>();
+        String selectQuery = "SELECT * FROM " +
+                TABLE_BPM + " WHERE " +
+                KEY_ID_DOG + " = " + id + " and " +
+                KEY_DATE + " LIKE '%" + date + "%'";
+        String startTime;
+        String time;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCursor = db.rawQuery(selectQuery, null);
 
         if (mCursor.moveToFirst()) {
             do {
-                DogProfile mDogProfile = new DogProfile();
-                mDogProfile.setDogId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
-                mDogProfile.setPicture(mCursor.getBlob(mCursor.getColumnIndex(KEY_PICTURE)));
-                mDogProfile.setDogName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
-                mDogProfile.setBreed(mCursor.getString(mCursor.getColumnIndex(KEY_BREED)));
-                mDogProfile.setIdSize(mCursor.getInt(mCursor.getColumnIndex(KEY_ID_SIZE)));
-                mDogProfile.setAge(mCursor.getInt(mCursor.getColumnIndex(KEY_AGE)));
+                BpmValue mBpmValue = new BpmValue();
+                startTime = mCursor.getString(mCursor.getColumnIndex(KEY_DATE));
+                StringTokenizer tk = new StringTokenizer(startTime);
+                tk.nextToken();
 
-                Profiles.add(mDogProfile);
+                time = tk.nextToken();
+
+                mBpmValue.setDate(time);
+                mBpmValue.setBpm(mCursor.getInt(mCursor.getColumnIndex(KEY_BPM)));
+                values.add(mBpmValue);
             } while (mCursor.moveToNext());
         }
         if (mCursor != null && !mCursor.isClosed()) {
             mCursor.close();
         }
-        return Profiles;
-    }*/
+        return values;
+    }
 
     public ArrayList<DogProfile> getListSelectProfile() {
         ArrayList<DogProfile> Profiles = new ArrayList<DogProfile>();
         String selectQuery = "SELECT  * FROM " + TABLE_PROFILE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCursor = db.rawQuery(selectQuery, null);
+        DogProfile mDogProfile;
 
         if (mCursor.moveToFirst()) {
             do {
-                DogProfile mDogProfile = new DogProfile();
+                mDogProfile = new DogProfile();
                 mDogProfile.setDogId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
                 mDogProfile.setPicture(mCursor.getBlob(mCursor.getColumnIndex(KEY_PICTURE)));
                 mDogProfile.setDogName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
@@ -191,24 +225,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Profiles;
     }
 
-    public ArrayList<String> getNameProfile() {
-        ArrayList<String> mName = new ArrayList<String>();
-        String selectQuery = "SELECT " + KEY_NAME + " FROM " + TABLE_PROFILE;
+    public ArrayList<DogNameId> getNameProfile() {
+        ArrayList<DogNameId> mNameId = new ArrayList<DogNameId>();
+        String selectQuery = "SELECT " + KEY_NAME + "," + KEY_ID + " FROM " + TABLE_PROFILE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCursor = db.rawQuery(selectQuery, null);
-        String name;
+        DogNameId mDogNameId;
         if (mCursor.moveToFirst()) {
             do {
+                mDogNameId = new DogNameId();
+                mDogNameId.setName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
+                mDogNameId.setId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
 
-                name = mCursor.getString(mCursor.getColumnIndex(KEY_NAME));
-
-                mName.add(name);
+                mNameId.add(mDogNameId);
             } while (mCursor.moveToNext());
         }
         if (mCursor != null && !mCursor.isClosed()) {
             mCursor.close();
         }
-        return mName;
+        return mNameId;
     }
 
 
@@ -240,8 +275,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (mCursor != null && !mCursor.isClosed()) {
             mCursor.close();
         }
+
         return mDogProfileDTO;
     }
 
+    /**
+     * Delete
+     */
+    public int deleteProfile(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String deleteQuery = KEY_ID + " = " + id;
+        return db.delete(TABLE_PROFILE, deleteQuery, null);
+    }
 
+    /**
+     * Update
+     */
+    public int updateProfile(DogProfile dogProfile) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_PICTURE, dogProfile.getPicture());
+        values.put(KEY_NAME, dogProfile.getDogName());
+        values.put(KEY_ID_GENDER, dogProfile.getIdDogGender());
+        values.put(KEY_BREED, dogProfile.getBreed());
+        values.put(KEY_ID_SIZE, dogProfile.getIdSize());
+        values.put(KEY_AGE, dogProfile.getAge());
+
+        int profile_id = db.update(TABLE_PROFILE, values, KEY_ID + "=" + dogProfile.getDogId(), null);
+
+        db.close();
+        return profile_id;
+
+
+    }
 }

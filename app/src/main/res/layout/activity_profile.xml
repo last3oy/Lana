@@ -87,6 +87,7 @@
                 android:layout_gravity="bottom|right"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:visibility="gone"
                 android:text="@string/btn_add_profile" />
         </LinearLayout>
 

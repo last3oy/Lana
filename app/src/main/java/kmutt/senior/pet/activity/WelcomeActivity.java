@@ -43,6 +43,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(intent);
             } else if (v == btnPair) {
                 Intent intent = new Intent(WelcomeActivity.this, BluetoothActivity.class);
+                intent.putExtra("flag",1);
                 startActivity(intent);
             }
 

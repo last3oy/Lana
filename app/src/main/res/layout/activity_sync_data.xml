@@ -19,12 +19,6 @@
             android:layout_height="wrap_content"
             android:text="Device : HM-10" />
 
-        <Button
-            android:id="@+id/btnConnection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="connect" />
-
     </LinearLayout>
 
     <ListView

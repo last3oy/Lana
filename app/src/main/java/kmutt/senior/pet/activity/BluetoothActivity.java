@@ -17,10 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,29 +34,29 @@ import kmutt.senior.pet.R;
 import kmutt.senior.pet.adapter.DeviceListAdapter;
 
 
-public class BluetoothActivity extends AppCompatActivity implements View.OnClickListener {
+public class BluetoothActivity extends AppCompatActivity {
 
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
     private BluetoothAdapter mBluetoothAdapter;
-    private Button btnScan;
-    private Button btnCancel;
-    private ProgressDialog mProgressDlg;
     private ListView mListView;
     private DeviceListAdapter mAdapter;
     private BluetoothLeScanner mLeScanner;
     private boolean mScanning;
     private Handler mHandler;
+    private TextView tvHello;
     private int REQUEST_ENABLE_BT = 1;
     // Stops scanning after 5 seconds.
-    private static final long SCAN_PERIOD = 5000;
+    private static final long SCAN_PERIOD = 1500;
     private ScanCallback mScanCallback;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
+    private int flag;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
+
 
         // Use this check to determine whether BLE is supported on the device. Then
         // you can selectively disable BLE-related features.
@@ -72,42 +75,55 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initInstances() {
-        mHandler = new Handler();
-        btnScan = (Button) findViewById(R.id.btnScan);
-        btnCancel = (Button) findViewById(R.id.btnCancel);
+        getSupportActionBar().setTitle("Select Device");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
+        flag = intent.getIntExtra("flag", -1);
+
+        mHandler = new Handler();
+        tvHello = (TextView) findViewById(R.id.tvHello);
         mListView = (ListView) findViewById(R.id.lvBt);
 
         mAdapter = new DeviceListAdapter(this);
         //mListView.setAdapter(mAdapter);
 
 
-        btnScan.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
         if (Build.VERSION.SDK_INT >= 21) {
             initcallbacklollipop();
         } else {
             initcallback();
         }
-        AdapterView.OnItemClickListener itemDevicesClicked = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final BluetoothDevice device = mAdapter.getDevice(position);
-                if (device != null) {
-                    final Intent intent = new Intent(getApplicationContext(), SyncDataActivity.class);
-                    intent.putExtra("DEVICE_NAME", device.getName());
-                    intent.putExtra("DEVICE_ADDRESS", device.getAddress());
-                    startActivity(intent);
 
 
-                }
-
-
-            }
-        };
         mListView.setOnItemClickListener(itemDevicesClicked);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        if (id == R.id.action_sync) {
+            tvHello.setVisibility(View.INVISIBLE);
+            scanLeDevice(true);
+            return true;
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_select_device, menu);
+
+        return true;
+    }
 
     @Override
     protected void onStart() {
@@ -178,21 +194,6 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
         super.onDestroy();
     }
 
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.btnCancel:
-                scanLeDevice(false);
-                final Intent intent = new Intent(getApplicationContext(), SyncDataActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.btnScan:
-                scanLeDevice(true);
-                btnScan.setEnabled(false);
-                break;
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_ENABLE_BT) {
@@ -216,7 +217,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
                         mLeScanner.stopScan(mScanCallback);
 
                     }
-                    btnScan.setEnabled(true);
+
                     mListView.setAdapter(mAdapter);
                 }
             }, SCAN_PERIOD);
@@ -232,9 +233,31 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnClick
                 mLeScanner.stopScan(mScanCallback);
 
             }
-            btnScan.setEnabled(true);
             mListView.setAdapter(mAdapter);
         }
     }
+
+    /**
+     *
+     */
+
+    AdapterView.OnItemClickListener itemDevicesClicked = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final BluetoothDevice device = mAdapter.getDevice(position);
+            if (device != null) {
+                final Intent intent = new Intent(getApplicationContext(), SyncDataActivity.class);
+                intent.putExtra("DEVICE_NAME", device.getName());
+                intent.putExtra("DEVICE_ADDRESS", device.getAddress());
+                intent.putExtra("flag", flag);
+                startActivity(intent);
+                finish();
+
+
+            }
+
+
+        }
+    };
 
 }

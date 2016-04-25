@@ -1,9 +1,11 @@
 package kmutt.senior.pet.activity;
 
-import android.bluetooth.BluetoothGattCharacteristic;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -11,39 +13,50 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 
 import kmutt.senior.pet.R;
+import kmutt.senior.pet.adapter.DogProfileAdapter;
+import kmutt.senior.pet.model.DogProfile;
 import kmutt.senior.pet.service.BluetoothLeService;
+import kmutt.senior.pet.service.DatabaseHelper;
 
 public class SyncDataActivity extends AppCompatActivity {
 
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
-
     private TextView mConnectionState;
-    private Button button;
     private TextView mDataField;
     private String mDeviceName;
     private String mDeviceAddress;
     private ExpandableListView mGattServicesList;
     private BluetoothLeService mBluetoothLeService;
-    private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
-            new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
+    private DatabaseHelper db;
+    private ListView lvProfile;
+    private ArrayList<DogProfile> allProfile;
+    private DogProfileAdapter mAdapter;
     private boolean mConnected = false;
-    private BluetoothGattCharacteristic mNotifyCharacteristic;
+    private int dogId;
+    private int flag;
+    private ProgressDialog progress;
+    private MenuItem itemMenu;
+    private boolean bConnect;
 
-    private final String LIST_NAME = "NAME";
-    private final String LIST_UUID = "UUID";
-    int i = 0, m;
-    String a;
+    private ArrayList<Integer> q = new ArrayList<Integer>();
+    private int i = 0, m;
+    private String a;
 
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -57,18 +70,21 @@ public class SyncDataActivity extends AppCompatActivity {
             }
             // Automatically connects to the device upon successful start-up initialization.
             mBluetoothLeService.connect(mDeviceAddress);
+            itemMenu.setTitle("Connect");
+            bConnect = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             mBluetoothLeService = null;
+            itemMenu.setTitle("Disconnect");
+            bConnect = false;
         }
     };
 
     // Handles various events fired by the Service.
     // ACTION_GATT_CONNECTED: connected to a GATT server.
     // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
-    // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
     // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read
     //                        or notification operations.
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
@@ -79,25 +95,42 @@ public class SyncDataActivity extends AppCompatActivity {
                 mConnected = true;
                 mDataField.setText("Connected");
 
-                // updateConnectionState(R.string.app_name);
-                //  invalidateOptionsMenu();
             } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
                 mConnected = false;
                 mDataField.setText("Disconnect");
-                //  updateConnectionState(R.string.app_name);
-                //  invalidateOptionsMenu();
-                //  clearUI();
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-                a = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
-//                m=Integer.parseInt(a);
+
+                m = intent.getIntExtra(BluetoothLeService.EXTRA_DATA, 0);
+                if (m != 0) {
+                    q.add(m);
+                    i++;
+                }
+                if (i == 10) {
+                    calulateBPM();
+                }
 
 
-                mDataField.setText(a);
-//                m=Integer.parseInt(mDataField.getText().toString());
-                i++;
             }
         }
     };
+
+    private void calulateBPM() {
+        unregisterReceiver(mGattUpdateReceiver);
+        int sum = 0;
+        for (int value : q) {
+            sum += value;
+        }
+        sum /= q.size();
+        db.createBpmvalue(dogId, sum);
+        progress.dismiss();
+        if (flag == 0) {
+            finish();
+        } else if (flag == 1) {
+            Intent intent = new Intent(SyncDataActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
+    }
 
 
     @Override
@@ -105,25 +138,55 @@ public class SyncDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_data);
 
+        initInstance();
+    }
+
+    private void initInstance() {
+        getSupportActionBar().setTitle("Sync");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+
+        db = new DatabaseHelper(this);
+
+        lvProfile = (ListView) findViewById(R.id.lvProfile);
+
+        allProfile = db.getListSelectProfile();
+        if (allProfile == null) {
+            final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setMessage("You haven't dog profile pls add.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+
+        mAdapter = new DogProfileAdapter(this, allProfile);
+        lvProfile.setAdapter(mAdapter);
+
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+        flag = intent.getIntExtra("flag", -1);
+        Toast.makeText(SyncDataActivity.this, "" + flag, Toast.LENGTH_SHORT).show();
 
-        // Sets up UI references.
-        /*
-        ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
-        mGattServicesList = (ExpandableListView) findViewById(R.id.gatt_services_list);
-        mGattServicesList.setOnChildClickListener(servicesListClickListner);
-    mConnectionState = (TextView) findViewById(R.id.connection_state);
-    */
+
+        setProgressDialog();
+
         mDataField = (TextView) findViewById(R.id.tvDeviceName);
-        button = (Button) findViewById(R.id.btnConnection);
-        button.setOnClickListener(new View.OnClickListener() {
+
+
+        lvProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                if (mBluetoothLeService != null) {
-                    mBluetoothLeService.readCustomCharacteristic();
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dogId = mAdapter.getIdProfile(position);
+                mBluetoothLeService.readCustomCharacteristic();
+                progress.show();
             }
         });
 
@@ -131,20 +194,32 @@ public class SyncDataActivity extends AppCompatActivity {
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
     }
 
+    private void setProgressDialog() {
+        progress = new ProgressDialog(this);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Syncing...");
+        progress.setCancelable(false);
+        progress.setCanceledOnTouchOutside(false);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
-        if (mBluetoothLeService != null) {
-            final boolean result = mBluetoothLeService.connect(mDeviceAddress);
-            Log.d("TAG", "Connect request result=" + result);
+        if (mGattUpdateReceiver != null) {
+            registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+            if (mBluetoothLeService != null) {
+                final boolean result = mBluetoothLeService.connect(mDeviceAddress);
+                Log.d("TAG", "Connect request result=" + result);
+            }
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(mGattUpdateReceiver);
+        if (mGattUpdateReceiver.isOrderedBroadcast()) {
+            unregisterReceiver(mGattUpdateReceiver);
+        }
     }
 
     @Override
@@ -154,20 +229,36 @@ public class SyncDataActivity extends AppCompatActivity {
         mBluetoothLeService = null;
     }
 
-
-    private void updateConnectionState(final int resourceId) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //mConnectionState.setText(resourceId);
-            }
-        });
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_connect_device, menu);
+        itemMenu = menu.findItem(R.id.action_connect);
+        return true;
     }
 
-    private void displayData(String data) {
-        if (data != null) {
-            mDataField.setText(data);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
         }
+        if (id == R.id.action_connect) {
+            if (bConnect) {
+                itemMenu.setTitle("Connect");
+                mBluetoothLeService.disconnect();
+                bConnect = false;
+                return true;
+            } else {
+                itemMenu.setTitle("Disconnect");
+                mBluetoothLeService.connect(mDeviceAddress);
+                bConnect = true;
+                return true;
+            }
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -179,15 +270,5 @@ public class SyncDataActivity extends AppCompatActivity {
         return intentFilter;
     }
 
-    public void onClickWrite(View v) {
-        if (mBluetoothLeService != null) {
-            mBluetoothLeService.writeCustomCharacteristic(0xAA);
-        }
-    }
 
-    public void onClickRead(View v) {
-        if (mBluetoothLeService != null) {
-            mBluetoothLeService.readCustomCharacteristic();
-        }
-    }
 }

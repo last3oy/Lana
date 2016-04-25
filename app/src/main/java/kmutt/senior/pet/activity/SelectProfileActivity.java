@@ -42,26 +42,40 @@ public class SelectProfileActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
 
         lvProfile = (ListView) findViewById(R.id.lvProfile);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         allProfile = db.getListSelectProfile();
+        if (!allProfile.isEmpty()) {
+            mAdapter = new DogProfileAdapter(this, allProfile);
 
-        mAdapter = new DogProfileAdapter(this,allProfile);
+            lvProfile.invalidate();
+            lvProfile.setAdapter(mAdapter);
 
-        lvProfile.setAdapter(mAdapter);
+            lvProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        lvProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                    Log.i("SELCETPROFILE", "" + mAdapter.getIdProfile(position));
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idProfile", mAdapter.getIdProfile(position));
+                    intent.putExtra("idBundle", bundle);
+                    startActivity(intent);
 
-                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                Log.i("SELCETPROFILE", "" + mAdapter.getIdProfile(position));
-                Bundle bundle = new Bundle();
-                bundle.putInt("idProfile",mAdapter.getIdProfile(position));
-                intent.putExtra("idBundle", bundle);
-                startActivity(intent);
+                }
+            });
+        } else finish();
+    }
 
-            }
-        });
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        allProfile.clear();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

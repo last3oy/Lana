@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LANA</string>
+    <string name="app_name">Lana</string>
     <string name="hello_world">Hello World</string>
     <string name="logo_name">lana</string>
     <string name="btn_pair">Start Pairing</string>
@@ -12,6 +12,8 @@
     <string name="edt_hint_gender">Gender</string>
     <string name="btn_add_profile">Add</string>
 
+    <string name="calendar_date_picker_result_values">%3$s/%2$s/%1$s</string>
+    <string name="expiration_picker_result_value">%1$s/%2$s</string>
     <string name="action_settings">Settings</string>
 
 
@@ -48,5 +50,6 @@
         <item>@string/gender_male</item>
         <item>@string/gender_female</item>
     </string-array>
+    <string name="title_activity_about">AboutActivity</string>
 
 </resources>

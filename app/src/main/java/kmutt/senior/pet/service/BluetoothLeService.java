@@ -134,11 +134,23 @@ public class BluetoothLeService extends Service {
                     stringBuilder.append(String.format("%C",byteChar));
 
                 }
+            String a =stringBuilder.toString();
+            int i = Integer.parseInt(a);
 
-            intent.putExtra(EXTRA_DATA, stringBuilder.toString());
+            intent.putExtra(EXTRA_DATA, i);
         }
 
         sendBroadcast(intent);
+    }
+
+    public int convertirOctetEnEntier(byte[] b){
+        int MASK = 0xFF;
+        int result = 0;
+        result = b[0] & MASK;
+        result = result + ((b[1] & MASK) << 8);
+        result = result + ((b[2] & MASK) << 16);
+        result = result + ((b[3] & MASK) << 24);
+        return result;
     }
 
     public class LocalBinder extends Binder {
