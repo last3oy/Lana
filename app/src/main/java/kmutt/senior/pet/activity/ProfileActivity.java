@@ -96,6 +96,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         adapter_gender = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_dropdown_item_1line, GENDER);
+
+
+
+
+
         db = new DatabaseHelper(this);
         profile = db.getDogProfile(idProfile);
         if (profile != null) {
@@ -178,6 +183,9 @@ public class ProfileActivity extends AppCompatActivity {
         spinnerBreed.setEnabled(enabled);
         spinnerSize.setEnabled(enabled);
         edtAge.setEnabled(enabled);
+        spinnerBreed.setAdapter(adapter_breed);
+        spinnerSize.setAdapter(adapter_size);
+        spinnerGender.setAdapter(adapter_gender);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

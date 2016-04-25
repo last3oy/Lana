@@ -34,7 +34,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.BluetoothActivity" />
         <activity android:name=".activity.SelectProfileActivity" />
-        <activity android:name=".activity.ProfileActivity" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.SyncDataActivity" />
 
         <service

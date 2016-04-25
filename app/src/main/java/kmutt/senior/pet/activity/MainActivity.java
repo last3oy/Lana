@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
     protected void onResume() {
         super.onResume();
         if (allNameProfile.size() >= 1) {
-            Toast.makeText(MainActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
             listValue = db.getbpm(profile.getId(), currentDate);
             setDataDailyChart(listValue);
             listValue = db.getbpm(profile.getId(), currentMonth);
@@ -135,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
     protected void onStop() {
         super.onStop();
         allNameProfile.clear();
+        tvMonth.setText(tvMonth.getText().toString().replaceAll("No data",""));
         Log.i("MainActivity", "Stop");
     }
 
@@ -372,8 +372,10 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
             //data.setDrawValues(true);
             mLineChart.notifyDataSetChanged();
             mLineChart.setData(data);
+            mLineChart.invalidate();
         } else {
             tvMonth.setText(tvMonth.getText().toString() + " No data");
+            mLineChart.clear();
             mLineChart.invalidate();
         }
     }
@@ -428,8 +430,11 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
             // set data
             mBarChart.setData(data);
 
+            mBarChart.invalidate();
+
         } else {
             tvBpm.setText("can't not find average value");
+            mBarChart.clear();
             mBarChart.invalidate();
         }
 
@@ -507,6 +512,13 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
                 profile = db.getDogProfile(id);
                 drawerLayout.closeDrawer(navigation);
                 changeProfile();
+                initDailyChart();
+                initMonthlyChart();
+                listValue = db.getbpm(profile.getId(), currentDate);
+                setDataDailyChart(listValue);
+                listValue = db.getbpm(profile.getId(), currentMonth);
+                setDataMonthChart(listValue);
+
 
 
             } else {
@@ -569,7 +581,9 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         tvMonth.setText("Month: " + getString(R.string.expiration_picker_result_value, String.format("%02d", monthOfYear), year));
         currentMonth = year + "-" + String.format("%02d", monthOfYear);
         listValue = db.getbpm(profile.getId(), currentMonth);
+        initMonthlyChart();
         setDataMonthChart(listValue);
+
 
     }
 
@@ -589,9 +603,10 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
         } catch (ParseException e) {
             Toast.makeText(MainActivity.this, "No Date to Select", Toast.LENGTH_SHORT).show();
         }
-
+        initDailyChart();
         listValue = db.getbpm(profile.getId(),currentDate);
         setDataDailyChart(listValue);
+
 
 
     }
