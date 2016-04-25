@@ -128,6 +128,7 @@ public class SyncDataActivity extends AppCompatActivity {
         } else if (flag == 1) {
             Intent intent = new Intent(SyncDataActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }
