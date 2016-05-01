@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,9 +27,9 @@ import java.util.ArrayList;
 
 import kmutt.senior.pet.R;
 import kmutt.senior.pet.adapter.DogProfileAdapter;
-import kmutt.senior.pet.model.DogProfile;
+import kmutt.senior.pet.model.DogProfileInput;
 import kmutt.senior.pet.service.BluetoothLeService;
-import kmutt.senior.pet.service.DatabaseHelper;
+import kmutt.senior.pet.util.DatabaseHelper;
 
 public class SyncDataActivity extends AppCompatActivity {
 
@@ -45,7 +44,7 @@ public class SyncDataActivity extends AppCompatActivity {
     private BluetoothLeService mBluetoothLeService;
     private DatabaseHelper db;
     private ListView lvProfile;
-    private ArrayList<DogProfile> allProfile;
+    private ArrayList<DogProfileInput> allProfile;
     private DogProfileAdapter mAdapter;
     private boolean mConnected = false;
     private int dogId;
@@ -143,6 +142,7 @@ public class SyncDataActivity extends AppCompatActivity {
     }
 
     private void initInstance() {
+
         getSupportActionBar().setTitle("Sync");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -152,20 +152,6 @@ public class SyncDataActivity extends AppCompatActivity {
 
         lvProfile = (ListView) findViewById(R.id.lvProfile);
 
-        allProfile = db.getListSelectProfile();
-        if (allProfile == null) {
-            final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setMessage("You haven't dog profile pls add.");
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                            dialog.dismiss();
-                        }
-                    });
-            alertDialog.show();
-        }
 
         mAdapter = new DogProfileAdapter(this, allProfile);
         lvProfile.setAdapter(mAdapter);
@@ -174,7 +160,6 @@ public class SyncDataActivity extends AppCompatActivity {
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         flag = intent.getIntExtra("flag", -1);
-        Toast.makeText(SyncDataActivity.this, "" + flag, Toast.LENGTH_SHORT).show();
 
 
         setProgressDialog();
@@ -182,17 +167,29 @@ public class SyncDataActivity extends AppCompatActivity {
         mDataField = (TextView) findViewById(R.id.tvDeviceName);
 
 
-        lvProfile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dogId = mAdapter.getIdProfile(position);
-                mBluetoothLeService.readCustomCharacteristic();
-                progress.show();
-            }
-        });
+        lvProfile.setOnItemClickListener(profileClicked);
 
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+        allProfile = db.getListSelectProfile();
+        if (allProfile == null) {
+            showAlertDialog();
+        }
+
+    }
+
+    private void showAlertDialog() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setMessage("You haven't dog profile pls add.");
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void setProgressDialog() {
@@ -262,7 +259,7 @@ public class SyncDataActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    // init filter
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
@@ -271,5 +268,13 @@ public class SyncDataActivity extends AppCompatActivity {
         return intentFilter;
     }
 
+    AdapterView.OnItemClickListener profileClicked = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            dogId = mAdapter.getIdProfile(position);
+            mBluetoothLeService.readCustomCharacteristic();
+            progress.show();
+        }
+    };
 
 }

@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -27,10 +26,10 @@ import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
+import kmutt.senior.pet.model.DogProfileInput;
 import kmutt.senior.pet.model.DogProfile;
-import kmutt.senior.pet.model.DogProfileDTO;
-import kmutt.senior.pet.service.DatabaseHelper;
-import kmutt.senior.pet.service.DbBitmapUtility;
+import kmutt.senior.pet.util.DatabaseHelper;
+import kmutt.senior.pet.util.DbBitmapUtility;
 
 /**
  * Created by last3oy on 14/04/2016.
@@ -54,7 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter_size;
     private ArrayAdapter<String> adapter_gender;
 
-    private DogProfileDTO profile;
+    private DogProfile profile;
     private DatabaseHelper db;
     private boolean bool = true;
 
@@ -99,13 +98,8 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-
-
         db = new DatabaseHelper(this);
         profile = db.getDogProfile(idProfile);
-        if (profile != null) {
-            Toast.makeText(this, "haha", Toast.LENGTH_LONG).show();
-        }
 
         pictureProfile.setImageBitmap(DbBitmapUtility.getImage(profile.getPicture()));
         edtName.setText(profile.getName());
@@ -114,16 +108,18 @@ public class ProfileActivity extends AppCompatActivity {
         spinnerSize.setText(profile.getSize());
         edtAge.setText(String.valueOf(profile.getAge()));
 
-        pictureProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent
-                        , "Select photo from"), SELECT_PHOTO);
-            }
-        });
 
+        initAlertDialog();
+
+        pictureProfile.setOnClickListener(avatarClicked);
+        btnSummit.setOnClickListener(btnSummitClicked);
+
+        setViewEnabled(false);
+
+
+    }
+
+    private void initAlertDialog() {
         alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("Need to add all fields");
@@ -133,23 +129,6 @@ public class ProfileActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
-        btnSummit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkInput()) {
-                    setDogProfile();
-                    db.updateProfile(setDogProfile());
-                    finish();
-                } else {
-                    alertDialog.show();
-                }
-            }
-        });
-
-        setViewEnabled(false);
-
-
     }
 
     @Override
@@ -239,15 +218,9 @@ public class ProfileActivity extends AppCompatActivity {
         return true;
     }
 
-    private DogProfile setDogProfile() {
-        DogProfile mProfile = new DogProfile();
+    private DogProfileInput setDogProfile() {
+        DogProfileInput mProfile = new DogProfileInput();
         Bitmap img = ((BitmapDrawable) pictureProfile.getDrawable()).getBitmap();
-
-        Log.i("TEST", "" + DbBitmapUtility.getBytes(img));
-        Log.i("TEST", "" + spinnerBreed.getText().toString());
-        Log.i("TEST", "" + edtName.getText().toString());
-        Log.i("TEST", "" + spinnerSize.getText().toString());
-        Log.i("TEST", "" + Integer.parseInt(edtAge.getText().toString()));
 
         mProfile.setPicture(DbBitmapUtility.getBytes(img));
         mProfile.setDogName(edtName.getText().toString());
@@ -289,5 +262,28 @@ public class ProfileActivity extends AppCompatActivity {
         // Log.i("return", "0");
         return 0;
     }
+
+    View.OnClickListener avatarClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(Intent.createChooser(intent
+                    , "Select photo from"), SELECT_PHOTO);
+        }
+    };
+
+    View.OnClickListener btnSummitClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (checkInput()) {
+                setDogProfile();
+                db.updateProfile(setDogProfile());
+                finish();
+            } else {
+                alertDialog.show();
+            }
+        }
+    };
 
 }

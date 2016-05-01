@@ -12,21 +12,21 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
-import kmutt.senior.pet.model.DogProfile;
-import kmutt.senior.pet.service.DbBitmapUtility;
+import kmutt.senior.pet.model.DogProfileInput;
+import kmutt.senior.pet.util.DbBitmapUtility;
 
 /**
  * Created by last3oy on 31/03/2016.
  */
 public class DogProfileAdapter extends BaseAdapter {
-    private ArrayList<DogProfile> mProfile;
-    LayoutInflater mInflator;
+    private ArrayList<DogProfileInput> mProfile;
+    private LayoutInflater mInflator;
 
-    public DogProfileAdapter(Context context,ArrayList<DogProfile> Profile) {
+    public DogProfileAdapter(Context context,ArrayList<DogProfileInput> Profile) {
         mInflator = LayoutInflater.from(context);
         this.mProfile = Profile;
-        for (DogProfile mDogProfile : this.mProfile) {
-            Log.d("ToDo", mDogProfile.getDogName());
+        for (DogProfileInput mDogProfileInput : this.mProfile) {
+            Log.d("ToDo", mDogProfileInput.getDogName());
         }
     }
 
@@ -63,7 +63,7 @@ public class DogProfileAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        DogProfile Profile = mProfile.get(position);
+        DogProfileInput Profile = mProfile.get(position);
         viewHolder.profilePicture.setImageBitmap(DbBitmapUtility.getImage(Profile.getPicture()));
         viewHolder.profileName.setText("Name: "+Profile.getDogName());
         viewHolder.profileBreed.setText("Breed: "+Profile.getBreed());

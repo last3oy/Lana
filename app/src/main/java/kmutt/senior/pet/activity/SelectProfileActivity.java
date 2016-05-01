@@ -13,15 +13,15 @@ import java.util.ArrayList;
 
 import kmutt.senior.pet.R;
 import kmutt.senior.pet.adapter.DogProfileAdapter;
-import kmutt.senior.pet.model.DogProfile;
-import kmutt.senior.pet.service.DatabaseHelper;
+import kmutt.senior.pet.model.DogProfileInput;
+import kmutt.senior.pet.util.DatabaseHelper;
 
 public class SelectProfileActivity extends AppCompatActivity {
 
-    DatabaseHelper db;
-    ListView lvProfile;
-    ArrayList<DogProfile> allProfile;
-    DogProfileAdapter mAdapter;
+    private DatabaseHelper db;
+    private ListView lvProfile;
+    private ArrayList<DogProfileInput> allProfile;
+    private DogProfileAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

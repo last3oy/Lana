@@ -28,9 +28,9 @@ import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
-import kmutt.senior.pet.model.DogProfile;
-import kmutt.senior.pet.service.DatabaseHelper;
-import kmutt.senior.pet.service.DbBitmapUtility;
+import kmutt.senior.pet.model.DogProfileInput;
+import kmutt.senior.pet.util.DatabaseHelper;
+import kmutt.senior.pet.util.DbBitmapUtility;
 
 
 public class InputPetProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -53,31 +53,21 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
     private ArrayAdapter<String> adapter_breed;
     private ArrayAdapter<String> adapter_size;
     private ArrayAdapter<String> adapter_gender;
-    private DogProfile profile;
+    private DogProfileInput profile;
     private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_petprofile);
-
-
         initInstances();
-
-
-       /*if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentContainer, InputPetProfileFragment.newInstance())
-                    .commit();
-        }*/
-
     }
 
     private void initInstances() {
 
         db = new DatabaseHelper(getApplicationContext());
 
-        profile = new DogProfile();
+        profile = new DogProfileInput();
 
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -113,6 +103,14 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
         spinnerGender.setAdapter(adapter_gender);
 
 
+        initAlertDialog();
+
+        imageViewPictureProfile.setOnClickListener(this);
+        btnSummit.setOnClickListener(this);
+
+    }
+
+    private void initAlertDialog() {
         alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Alert");
         alertDialog.setMessage("Need to add all fields");
@@ -122,10 +120,6 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
                         dialog.dismiss();
                     }
                 });
-
-        imageViewPictureProfile.setOnClickListener(this);
-        btnSummit.setOnClickListener(this);
-
     }
 
     @Override
@@ -134,15 +128,6 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
         switch (requestCode) {
             case SELECT_PHOTO:
                 if (resultCode == Activity.RESULT_OK) {
-                    /*try {
-                        final Uri imageUri = data.getData();
-                        final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        imageViewPictureProfile.setImageBitmap(selectedImage);
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }*/
                     try {
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         Uri imageUri = data.getData();
@@ -151,15 +136,9 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
                         selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, stream);
                         imageViewPictureProfile.setImageBitmap(selectedImage);
 
-
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-
-                    /*InputPetProfileActivity activity = (InputPetProfileActivity) getActivity();
-                    Bitmap bitmap = getBitmapFromCameraData(data, activity);
-                    imageViewPictureProfile.setImageBitmap(bitmap);
-                    */
 
                 }
         }
@@ -217,12 +196,6 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
 
     private void setDogProfile() {
         Bitmap img = ((BitmapDrawable) imageViewPictureProfile.getDrawable()).getBitmap();
-        // Bitmap img = ((BitmapDrawable)((LayerDrawable) imageViewPictureProfile.getDrawable()).getDrawable(0)).getBitmap(‌​);
-        Log.i("TEST", "" + DbBitmapUtility.getBytes(img));
-        Log.i("TEST", "" + spinnerBreed.getText().toString());
-        Log.i("TEST", "" + edtName.getText().toString());
-        Log.i("TEST", "" + spinnerSize.getText().toString());
-        Log.i("TEST", "" + Integer.parseInt(edtAge.getText().toString()));
 
         profile.setPicture(DbBitmapUtility.getBytes(img));
         profile.setDogName(edtName.getText().toString());
@@ -236,30 +209,21 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
 
     private int setIdGender(String gender) {
         if (gender.matches(getString(R.string.gender_male))) {
-          //  Log.i("return", getString(R.string.gender_male));
             return 1;
         } else
-           // Log.i("return", getString(R.string.gender_female));
         return 2;
     }
 
     private int setSize(String size) {
-        Log.i("setidsize", size);
-        String s = getString(R.string.size_small);
-        String m = getString(R.string.size_medium);
 
         switch (size) {
             case "Small (<13 Kg)":
-              //  Log.i("return", getString(R.string.size_small));
                 return 1;
             case "Medium-Large (13-40 Kg)":
-               // Log.i("return", getString(R.string.size_medium));
                 return 2;
             case "X-Large (>40 Kg)":
-               // Log.i("return", getString(R.string.size_large));
                 return 3;
         }
-       // Log.i("return", "0");
         return 0;
     }
 

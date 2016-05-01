@@ -1,4 +1,4 @@
-package kmutt.senior.pet.service;
+package kmutt.senior.pet.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

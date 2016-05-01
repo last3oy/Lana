@@ -1,22 +1,19 @@
-package kmutt.senior.pet.service;
+package kmutt.senior.pet.util;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.nfc.Tag;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import kmutt.senior.pet.model.BpmValue;
 import kmutt.senior.pet.model.DogNameId;
+import kmutt.senior.pet.model.DogProfileInput;
 import kmutt.senior.pet.model.DogProfile;
-import kmutt.senior.pet.model.DogProfileDTO;
 
 /**
  * Created by last3oy on 11/04/2016.
@@ -133,16 +130,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Insert
      */
-    public long createProfile(DogProfile dogProfile) {
+    public long createProfile(DogProfileInput dogProfileInput) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_PICTURE, dogProfile.getPicture());
-        values.put(KEY_NAME, dogProfile.getDogName());
-        values.put(KEY_ID_GENDER, dogProfile.getIdDogGender());
-        values.put(KEY_BREED, dogProfile.getBreed());
-        values.put(KEY_ID_SIZE, dogProfile.getIdSize());
-        values.put(KEY_AGE, dogProfile.getAge());
+        values.put(KEY_PICTURE, dogProfileInput.getPicture());
+        values.put(KEY_NAME, dogProfileInput.getDogName());
+        values.put(KEY_ID_GENDER, dogProfileInput.getIdDogGender());
+        values.put(KEY_BREED, dogProfileInput.getBreed());
+        values.put(KEY_ID_SIZE, dogProfileInput.getIdSize());
+        values.put(KEY_AGE, dogProfileInput.getAge());
 
         long profile_id = db.insert(TABLE_PROFILE, null, values);
         Log.i("Insert", "" + profile_id);
@@ -201,22 +198,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return values;
     }
 
-    public ArrayList<DogProfile> getListSelectProfile() {
-        ArrayList<DogProfile> Profiles = new ArrayList<DogProfile>();
+    public ArrayList<DogProfileInput> getListSelectProfile() {
+        ArrayList<DogProfileInput> Profiles = new ArrayList<DogProfileInput>();
         String selectQuery = "SELECT  * FROM " + TABLE_PROFILE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor mCursor = db.rawQuery(selectQuery, null);
-        DogProfile mDogProfile;
+        DogProfileInput mDogProfileInput;
 
         if (mCursor.moveToFirst()) {
             do {
-                mDogProfile = new DogProfile();
-                mDogProfile.setDogId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
-                mDogProfile.setPicture(mCursor.getBlob(mCursor.getColumnIndex(KEY_PICTURE)));
-                mDogProfile.setDogName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
-                mDogProfile.setBreed(mCursor.getString(mCursor.getColumnIndex(KEY_BREED)));
+                mDogProfileInput = new DogProfileInput();
+                mDogProfileInput.setDogId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
+                mDogProfileInput.setPicture(mCursor.getBlob(mCursor.getColumnIndex(KEY_PICTURE)));
+                mDogProfileInput.setDogName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
+                mDogProfileInput.setBreed(mCursor.getString(mCursor.getColumnIndex(KEY_BREED)));
 
-                Profiles.add(mDogProfile);
+                Profiles.add(mDogProfileInput);
             } while (mCursor.moveToNext());
         }
         if (mCursor != null && !mCursor.isClosed()) {
@@ -247,8 +244,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public DogProfileDTO getDogProfile(int id) {
-        DogProfileDTO mDogProfileDTO = new DogProfileDTO();
+    public DogProfile getDogProfile(int id) {
+        DogProfile mDogProfile = new DogProfile();
         String selectQuery =
                 "SELECT " + TABLE_PROFILE + "." + KEY_ID + "," + TABLE_PROFILE + "." + KEY_PICTURE + "," + TABLE_PROFILE + "." + KEY_NAME + ","
                         + TABLE_GENDER + "." + KEY_GENDER + "," + TABLE_PROFILE + "." + KEY_BREED + "," + TABLE_SIZE + "." + KEY_SIZE + ","
@@ -262,13 +259,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (mCursor.moveToFirst()) {
             do {
-                mDogProfileDTO.setId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
-                mDogProfileDTO.setPicture(mCursor.getBlob(mCursor.getColumnIndex(KEY_PICTURE)));
-                mDogProfileDTO.setName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
-                mDogProfileDTO.setGender(mCursor.getString(mCursor.getColumnIndex(KEY_GENDER)));
-                mDogProfileDTO.setBreed(mCursor.getString(mCursor.getColumnIndex(KEY_BREED)));
-                mDogProfileDTO.setSize(mCursor.getString(mCursor.getColumnIndex(KEY_SIZE)));
-                mDogProfileDTO.setAge(mCursor.getInt(mCursor.getColumnIndex(KEY_AGE)));
+                mDogProfile.setId(mCursor.getInt(mCursor.getColumnIndex(KEY_ID)));
+                mDogProfile.setPicture(mCursor.getBlob(mCursor.getColumnIndex(KEY_PICTURE)));
+                mDogProfile.setName(mCursor.getString(mCursor.getColumnIndex(KEY_NAME)));
+                mDogProfile.setGender(mCursor.getString(mCursor.getColumnIndex(KEY_GENDER)));
+                mDogProfile.setBreed(mCursor.getString(mCursor.getColumnIndex(KEY_BREED)));
+                mDogProfile.setSize(mCursor.getString(mCursor.getColumnIndex(KEY_SIZE)));
+                mDogProfile.setAge(mCursor.getInt(mCursor.getColumnIndex(KEY_AGE)));
 
             } while (mCursor.moveToNext());
         }
@@ -276,7 +273,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             mCursor.close();
         }
 
-        return mDogProfileDTO;
+        return mDogProfile;
     }
 
     /**
@@ -291,18 +288,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Update
      */
-    public int updateProfile(DogProfile dogProfile) {
+    public int updateProfile(DogProfileInput dogProfileInput) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_PICTURE, dogProfile.getPicture());
-        values.put(KEY_NAME, dogProfile.getDogName());
-        values.put(KEY_ID_GENDER, dogProfile.getIdDogGender());
-        values.put(KEY_BREED, dogProfile.getBreed());
-        values.put(KEY_ID_SIZE, dogProfile.getIdSize());
-        values.put(KEY_AGE, dogProfile.getAge());
+        values.put(KEY_PICTURE, dogProfileInput.getPicture());
+        values.put(KEY_NAME, dogProfileInput.getDogName());
+        values.put(KEY_ID_GENDER, dogProfileInput.getIdDogGender());
+        values.put(KEY_BREED, dogProfileInput.getBreed());
+        values.put(KEY_ID_SIZE, dogProfileInput.getIdSize());
+        values.put(KEY_AGE, dogProfileInput.getAge());
 
-        int profile_id = db.update(TABLE_PROFILE, values, KEY_ID + "=" + dogProfile.getDogId(), null);
+        int profile_id = db.update(TABLE_PROFILE, values, KEY_ID + "=" + dogProfileInput.getDogId(), null);
 
         db.close();
         return profile_id;

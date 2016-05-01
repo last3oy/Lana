@@ -55,15 +55,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import kmutt.senior.pet.R;
 import kmutt.senior.pet.model.BpmValue;
 import kmutt.senior.pet.model.DogNameId;
-import kmutt.senior.pet.model.DogProfileDTO;
-import kmutt.senior.pet.service.DatabaseHelper;
-import kmutt.senior.pet.service.DbBitmapUtility;
+import kmutt.senior.pet.model.DogProfile;
+import kmutt.senior.pet.util.DatabaseHelper;
+import kmutt.senior.pet.util.DbBitmapUtility;
 import kmutt.senior.pet.view.CustomMarkerView;
 
 
 public class MainActivity extends AppCompatActivity implements CalendarDatePickerDialogFragment.OnDateSetListener, ExpirationPickerDialogFragment.ExpirationPickerDialogHandler {
 
-    private final int newSelectCode = 14;
     private static final String FRAG_TAG_DATE_PICKER = "fragment_date_picker_name";
     private DatabaseHelper db;
     private Toolbar toolbar;
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
     private View headerView;
     private CircleImageView civPicture;
     private Spinner spinner;
-    private DogProfileDTO profile;
+    private DogProfile profile;
     private TextView tvName;
     private TextView tvBreed;
     private int flag = 0;
@@ -455,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(MainActivity.this, InputPetProfileActivity.class);
-                        startActivityForResult(intent, newSelectCode);
+                        startActivity(intent);
                     }
                 });
         alertDialog.show();
@@ -531,7 +530,7 @@ public class MainActivity extends AppCompatActivity implements CalendarDatePicke
                         break;
                     case R.id.navItem2:
                         intent = new Intent(MainActivity.this, SelectProfileActivity.class);
-                        startActivityForResult(intent, newSelectCode);
+                        startActivity(intent);
                         drawerLayout.closeDrawer(navigation);
                         break;
                     case R.id.navItem3:

@@ -4,8 +4,8 @@ package kmutt.senior.pet.model;
  * Created by last3oy on 24/04/2016.
  */
 public class DogNameId {
-    String name;
-    int id;
+    private String name;
+    private int id;
 
     public String getName() {
         return name;

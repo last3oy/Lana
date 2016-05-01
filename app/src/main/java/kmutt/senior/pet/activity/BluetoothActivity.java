@@ -36,16 +36,14 @@ import kmutt.senior.pet.adapter.DeviceListAdapter;
 
 public class BluetoothActivity extends AppCompatActivity {
 
-    private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
     private BluetoothAdapter mBluetoothAdapter;
     private ListView mListView;
     private DeviceListAdapter mAdapter;
     private BluetoothLeScanner mLeScanner;
-    private boolean mScanning;
     private Handler mHandler;
     private TextView tvHello;
     private int REQUEST_ENABLE_BT = 1;
-    // Stops scanning after 5 seconds.
+    // Stops scanning after 1.5 seconds.
     private static final long SCAN_PERIOD = 1500;
     private ScanCallback mScanCallback;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
