@@ -31,4 +31,5 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.github.douglasjunior.BetterSpinner:library-material:bugfix-1.1.0-2'
     compile 'com.code-troopers.betterpickers:library:2.5.3'
+
 }

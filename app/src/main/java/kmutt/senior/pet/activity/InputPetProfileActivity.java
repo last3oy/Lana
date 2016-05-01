@@ -211,7 +211,7 @@ public class InputPetProfileActivity extends AppCompatActivity implements View.O
         if (gender.matches(getString(R.string.gender_male))) {
             return 1;
         } else
-        return 2;
+            return 2;
     }
 
     private int setSize(String size) {
