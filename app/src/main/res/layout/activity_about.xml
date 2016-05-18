@@ -13,10 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/book"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/iv_about_width"
+            android:layout_height="@dimen/iv_about_width"
             android:layout_gravity="center"
             android:src="@drawable/book"
             android:tintMode="add" />
@@ -25,15 +26,15 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apinut Oopachodsuwan"
+            android:text="@string/tv_about_book"
             android:layout_gravity="center"
-            android:padding="20dp"/>
+            android:padding="@dimen/tv_about_padding"/>
 
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pai"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/iv_about_width"
+            android:layout_height="@dimen/iv_about_width"
             android:layout_gravity="center"
             android:src="@drawable/pai"
             android:tintMode="add"/>
@@ -42,14 +43,14 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Patipon Suksangeaum"
+            android:text="@string/tv_about_pai"
             android:layout_gravity="center"
-            android:padding="20dp"/>
+            android:padding="@dimen/tv_about_padding"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/yai"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="@dimen/iv_about_width"
+            android:layout_height="@dimen/iv_about_width"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/yai"
             android:tintMode="add" />
@@ -58,9 +59,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chanala Wilangka"
+            android:text="@string/tv_about_yai"
             android:layout_gravity="center"
-            android:padding="20dp"/>
+            android:padding="@dimen/tv_about_padding"/>
 
     </LinearLayout>
 

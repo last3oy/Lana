@@ -36,34 +36,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/ll_main_padding">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:background="#f7bb73">
+                    android:background="@color/activity_main_fl_color">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginRight="@dimen/ll_main_margin_right"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvBpm"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="value"
-                            android:textColor="#ffffff" />
+                            android:text="@string/tv_bpm_day_value"
+                            android:textColor="@color/activity_main_tv_bpm_color" />
 
                         <TextView
                             android:id="@+id/tvDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="date"
-                            android:textColor="#ffffff"
+                            android:text="@string/tv_bpm_day_date"
+                            android:textColor="@color/activity_main_tv_bpm_color"
                             android:layout_gravity="right"/>
                     </LinearLayout>
 
@@ -73,35 +72,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:text="Date ▼"
-                        android:textColor="#384d5f" />
+                        android:text="@string/btn_day"
+                        android:textColor="@color/btn_date_text_color" />
                 </FrameLayout>
 
 
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/dailyBarChart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="@dimen/graph_height" />
 
                 <FrameLayout
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/ff_margin_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#f7bb73">
+                    android:background="@color/activity_main_fl_color">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginRight="@dimen/ll_main_margin_right"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvMonth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="month"
-                            android:textColor="#ffffff" />
+                            android:text="@string/tv_month_date"
+                            android:textColor="@color/activity_main_tv_bpm_color" />
 
 
                     </LinearLayout>
@@ -112,14 +111,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:text="Month ▼"
-                        android:textColor="#384d5f" />
+                        android:text="@string/btn_month"
+                        android:textColor="@color/btn_date_text_color" />
                 </FrameLayout>
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/monthlyLineChart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="@dimen/graph_height" />
 
             </LinearLayout>
 
@@ -134,8 +133,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="#333"
-        app:itemTextColor="#333"
+        app:itemIconTint="@color/nav_item_icon_tint_color"
+        app:itemTextColor="@color/nav_item_text_color"
         app:menu="@menu/navigation_drawer_items" />
 
 

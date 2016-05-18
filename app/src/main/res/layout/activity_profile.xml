@@ -16,8 +16,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/pictureProfile"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/iv_profile_big_width"
+                android:layout_height="@dimen/iv_profile_big_width"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/activity_vertical_margin"
                 android:tintMode="add"
@@ -28,57 +28,57 @@
                 android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="@dimen/edt_profile_margin_right"
                 android:hint="@string/edt_hint_name"
                 android:singleLine="true"
                 app:met_floatingLabel="normal"
                 app:met_iconLeft="@drawable/ic_pets_black_24dp"
-                app:met_iconPadding="0dp" />
+                app:met_iconPadding="@dimen/edt_profile_icon_padding" />
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/spinnerGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="@dimen/edt_profile_margin_right"
                 android:hint="@string/edt_hint_gender"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:met_floatingLabel="normal"
                 app:met_iconLeft="@drawable/ic_wc_black_24dp"
-                app:met_iconPadding="0dp" />
+                app:met_iconPadding="@dimen/edt_profile_icon_padding" />
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/spinnerBreed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="@dimen/edt_profile_margin_right"
                 android:hint="@string/edt_hint_breed"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:met_floatingLabel="normal"
                 app:met_iconLeft="@drawable/ic_info_black_24dp"
-                app:met_iconPadding="0dp" />
+                app:met_iconPadding="@dimen/edt_profile_icon_padding" />
 
             <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                 android:id="@+id/spinnerSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="@dimen/edt_profile_margin_right"
                 android:hint="@string/edt_hint_size"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:met_floatingLabel="normal"
                 app:met_iconLeft="@drawable/ic_toys_black_24dp"
-                app:met_iconPadding="0dp" />
+                app:met_iconPadding="@dimen/edt_profile_icon_padding" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/edtAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="@dimen/edt_profile_margin_right"
                 android:hint="@string/edt_hint_age"
                 android:inputType="number"
                 android:singleLine="true"
                 app:met_floatingLabel="normal"
                 app:met_iconLeft="@drawable/ic_cake_black_24dp"
-                app:met_iconPadding="0dp" />
+                app:met_iconPadding="@dimen/edt_profile_icon_padding" />
 
             <Button
                 android:id="@+id/btnSummit"

@@ -38,6 +38,7 @@
     <string name="size_small">Small (&lt;13 Kg)</string>
     <string name="size_medium">Medium-Large (13-40 Kg)</string>
     <string name="size_large">X-Large (&gt;40 Kg)</string>
+
     <string-array name="size">
         <item>@string/size_small</item>
         <item>@string/size_medium</item>
@@ -46,10 +47,28 @@
 
     <string name="gender_male">Male</string>
     <string name="gender_female">Female</string>
+
     <string-array name="gender">
         <item>@string/gender_male</item>
         <item>@string/gender_female</item>
     </string-array>
+
     <string name="title_activity_about">AboutActivity</string>
+    <string name="tv_about_book">Apinut Oopachodsuwan</string>
+    <string name="tv_about_pai">Patipon Suksangeaum</string>
+    <string name="tv_about_yai">Chanala Wilangka</string>
+    <string name="tv_search_device">Search Device</string>
+    <string name="tv_health_head">Caring For the Health of a Dog</string>
+    <string name="tv_health_one">1. Make sure you have a good, reliable veterinarian. A good way to choose a vet is to see if he or she answers your questions promptly and knowledgeably and to see how they interact with your pet. You will need to bring your dog for regular check-ups, so if your vet is too booked up you may want to look for a new one. Feel free to change veterinarians even after you take your dog to one.</string>
+    <string name="tv_health_two">2.Get your dog vaccinated. Your veterinarian will advise you as to which diseases are common in the area and so which diseases it is necessary to vaccinate against. Typically, vaccinations are kept up to date with regular booster injections, which may either be yearly or three-yearly, depending on the disease.</string>
+    <string name="tv_health_three">3.Provide your dog with plenty of exercise. Provide the right amount of exercise for the type of dog you have. A small toy dog may be better playing games of fetch or ball to tire it out, while a Labrador needs to have good long walks, for at least 30 - 45 minutes twice a day in order to burn its energy. You may have a dog that actually requires a ton of exercise and never tires out, for example terriers are often capable of running all day without tiring.</string>
+    <string name="tv_health_four">4.Use rewards for good behavior. Dogs need to learn to get along with other dogs—and humans—in order to have a good life. As an owner, it’s up to you to train your dog to be a good canine citizen. Unfortunately, bad behavior is the top reason that dogs are given up and dumped in shelters. The best way to train a dog is to use the reward system. In this system, a dog is rewarded for complying with its owner’s request through use of a small treat and a ton of praise.</string>
+    <string name="tv_health_five">5.Avoid giving your dog an excessive amount of treats or people food. This can lead to weight gain or health problems for your pet. Stick to the rule of only giving your dog treats when you\'re training it. Remember, this can be hard to follow, especially if your pup is looking at you with puppy dog eyes. However, stick to your guns!</string>
+    <string name="tv_bpm_day_value">value</string>
+    <string name="tv_bpm_day_date">date</string>
+    <string name="btn_day">Date ▼</string>
+    <string name="tv_month_date">month</string>
+    <string name="btn_month">Month ▼</string>
+    <string name="tv_device">Device : HM-10</string>
 
 </resources>
